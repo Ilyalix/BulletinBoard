@@ -1,0 +1,1 @@
+INSERT INTO phone (phone_id, phone, FK_Phone_Author, version) VALUES (265, 123, 262, 0);

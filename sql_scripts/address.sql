@@ -1,0 +1,1 @@
+INSERT INTO address (address_id, city, version) VALUES (262, 'Omsk', 0);

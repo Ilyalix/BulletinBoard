@@ -1,0 +1,1 @@
+INSERT INTO category (category_id, name, version) VALUES (260, 'clothes', 0);

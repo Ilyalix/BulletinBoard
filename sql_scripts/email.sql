@@ -1,0 +1,1 @@
+INSERT INTO email (email_id, email, version) VALUES (263, 'vk.com', 0);

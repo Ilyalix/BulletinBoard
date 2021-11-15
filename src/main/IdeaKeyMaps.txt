@@ -1,0 +1,9 @@
+ctrl + alt + l - format code
+ctrl + d - duplication code
+ctrl + y - remove line
+shift + F6 - rename
+ctrl + shift + / - manyline comment
+ctrl + / - oneline comment
+ctrl + shift + enter - create body + move to it + format code
+.var  + TAB - create variable1
+ctrl + alt + v - create variable1
