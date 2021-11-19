@@ -143,7 +143,7 @@ public class TestBulletin {
                 BigDecimal.valueOf(3.5));*/
 
         Advertisement lot5 = Advertisement.builder()
-                .name("Comp")
+                .name("Phone")
                 .dateOfPublic(LocalDate.of(2021, 4, 7))
                 .text("продам")
                 .price(BigDecimal.valueOf(1.5))
@@ -189,21 +189,21 @@ public class TestBulletin {
         Category newCaregory = Category.builder()
                 .name("Comp")
                 .build();
-        service.save(newCaregory);
+//        service.save(newCaregory);
 
-//        Category category = service.findById(45);
+        Category category = service.findById(45);
 //        System.out.println(category);
 
         //     category.setName("Toys");
 
         //    service.update(category);
 
-        //      service.deleteByCategory(31);
+   //     service.deleteById(266);
 
 
         AuthorService author = new AuthorServiceImpl();
 
-         author.save(dasha);
+        //   author.save(dasha);
         //   author.save(vadim);
 
    /*    Author author1 = author.findById(15);
@@ -221,7 +221,7 @@ public class TestBulletin {
 
 
         AdvertisementService advertisement = new AdvertisementServiceImpl();
-        advertisement.save(lot5);
+        // advertisement.save(lot5);
 
         Advertisement advertisementNew = advertisement.findById(64);
         //   System.out.println(advertisementNew);

@@ -36,7 +36,6 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         trans.commit();
 
         em.close();
-
     }
 
     @Override
@@ -189,3 +188,47 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         em.close();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    @Override
+    public List findAdvertisementByIdAuthor(int... ids) {
+        EntityManager em = FACTORY.createEntityManager();
+        EntityTransaction tran = em.getTransaction();
+
+        tran.begin();
+
+        List<Integer> names = new ArrayList<>();
+        List<Author> authors = new ArrayList<>();
+
+
+        for (Integer x : ids) {
+            names.add(x);
+            Author author = em.find(Author.class, x);
+            authors.add(author);
+        }
+
+        Query query = em.createQuery("FROM Advertisement c WHERE author IN :h_id");
+        query.setParameter("h_id", authors);
+        List<Advertisement> list = query.getResultList();
+
+
+        tran.commit();
+        em.close();
+
+        return list;
+    }*/
