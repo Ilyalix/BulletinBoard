@@ -198,7 +198,7 @@ public class TestBulletin {
 
         //    service.update(category);
 
-   //     service.deleteById(266);
+        //     service.deleteById(266);
 
 
         AuthorService author = new AuthorServiceImpl();
@@ -206,12 +206,12 @@ public class TestBulletin {
         //   author.save(dasha);
         //   author.save(vadim);
 
-   /*    Author author1 = author.findById(15);
+      /* Author author1 = author.findById(15);
         System.out.println(author1);*/
 
-        //    authorNew.setName("Dasha");
-        //  author.update(authorNew);
-        //       author.deleteById(92);
+        // authorNew.setName("Dasha");
+        // author.update(authorNew);
+        // author.deleteById(267);
 
 
    /*     List<Advertisement> author1= ((AuthorServiceImpl) author).findAdvertisementByIdAuthor(List.of(15, 36));
@@ -224,7 +224,7 @@ public class TestBulletin {
         // advertisement.save(lot5);
 
         Advertisement advertisementNew = advertisement.findById(64);
-        //   System.out.println(advertisementNew);
+        //System.out.println(advertisementNew);
    /*     advertisementNew.setAuthor(authorNew);
         advertisementNew.setCategory(categoryNew);
         advertisement.update(advertisementNew);*/
@@ -253,7 +253,7 @@ public class TestBulletin {
 
         //  advertisement.deleteAdvertisementByAuthor(131);
 
-        //  advertisement.deleteById(192);
+        //  advertisement.deleteById(272);
 
 
         MatchingAdService matchingAdService = new MatchingServiceImpl();

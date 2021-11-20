@@ -1,12 +1,16 @@
 package com.dao.impl;
 
 import com.dao.AdvertisementDAO;
+import com.domain.Advertisement_;
+import com.domain.Category;
+import com.domain.Category_;
 import com.service.AdvertisementService;
 import com.domain.Advertisement;
 import com.service.EmailService;
 import com.service.impl.EmailsServiceImpl;
 
 import javax.persistence.*;
+import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -63,7 +67,20 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         tran.begin();
 
-        Advertisement advertisement = em.find(Advertisement.class, id);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        CriteriaQuery<Advertisement> query = builder.createQuery(Advertisement.class);
+
+        Root<Advertisement> root = query.from(Advertisement.class);
+
+        Path<Integer> pathId = root.get(Advertisement_.id);
+
+        query.where(builder.equal(pathId, id));
+
+        query.select(root);
+
+        TypedQuery<Advertisement> query1 = em.createQuery(query);
+        Advertisement advertisement = query1.getSingleResult();
 
         tran.commit();
 
@@ -178,9 +195,18 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         tran.begin();
 
-       Query query =
-                em.createQuery("DELETE FROM Advertisement c WHERE c.id = :a_id");
-        query.setParameter("a_id", id);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        CriteriaDelete<Advertisement> criteriaDelete = builder.createCriteriaDelete(Advertisement.class);
+
+        Root<Advertisement> root = criteriaDelete.from(Advertisement.class);
+
+        Path<Integer> pathId = root.get(Advertisement_.id);
+
+        criteriaDelete.where(builder.equal(pathId, id));
+
+        Query query = em.createQuery(criteriaDelete);
+        query.executeUpdate();
 
         query.executeUpdate();
 

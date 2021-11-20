@@ -1,1 +1,1 @@
-INSERT INTO category (category_id, name, version) VALUES (260, 'clothes', 0);
+CREATE TABLE category (category_id int, name VARCHAR(255), version int);
