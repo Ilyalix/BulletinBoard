@@ -1,1 +1,1 @@
-INSERT INTO address (address_id, city, version) VALUES (262, 'Omsk', 0);
+CREATE TABLE address (address_id int, city VARCHAR(255), version int);

@@ -1,11 +1,14 @@
 package com.dao.impl;
 
 import com.dao.AuthorDAO;
+import com.domain.Advertisement_;
+import com.domain.Author_;
 import com.service.AuthorService;
 import com.domain.Advertisement;
 import com.domain.Author;
 
 import javax.persistence.*;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class AuthorDAOImpl implements AuthorDAO {
@@ -55,8 +58,20 @@ public class AuthorDAOImpl implements AuthorDAO {
 
         tran.begin();
 
-        Author author = em.find(Author.class, id);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
 
+        CriteriaQuery<Author> query = builder.createQuery(Author.class);
+
+        Root<Author> root = query.from(Author.class);
+
+        Path<Integer> pathId = root.get(Author_.id);
+
+        query.where(builder.equal(pathId, id));
+
+        query.select(root);
+
+        TypedQuery<Author> query1 = em.createQuery(query);
+        Author author = query1.getSingleResult();
         tran.commit();
 
         em.close();
@@ -88,8 +103,20 @@ public class AuthorDAOImpl implements AuthorDAO {
 
         tran.begin();
 
-        Author author = em.find(Author.class, id);
-        em.remove(author);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        CriteriaDelete<Author> criteriaDelete = builder.createCriteriaDelete(Author.class);
+
+        Root<Author> root = criteriaDelete.from(Author.class);
+
+        Path<Integer> pathId = root.get(Author_.id);
+
+        criteriaDelete.where(builder.equal(pathId, id));
+
+        Query query = em.createQuery(criteriaDelete);
+        query.executeUpdate();
+
+        query.executeUpdate();
 
         tran.commit();
         em.close();

@@ -1,2 +1,4 @@
-INSERT INTO advertisement (advertisement_id, dateOfPublic, name, price, text, FK_Ad_Author, FK_Ad_Category, version)
-VALUES (266, '2021-01-01', 'clothes', 1.0, 'продам', 36, 44, 0);
+CREATE TABLE advertisement (advertisement_id int, dateOfPublic VARCHAR(255), name VARCHAR(255), price int,
+text VARCHAR(255), FK_Ad_Author int, FK_Ad_Category int, version int);
+
+
