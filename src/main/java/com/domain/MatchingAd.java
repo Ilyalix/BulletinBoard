@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class MatchingAd {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "matching_ad_id")
     int id;
 

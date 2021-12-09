@@ -5,17 +5,24 @@ import com.service.AdvertisementService;
 import com.dao.impl.AdvertisementDAOImpl;
 import com.domain.Advertisement;
 import com.validation.Validation;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AdvertisementServiceImpl implements AdvertisementService {
 
-    public final AdvertisementDAO DAO;
+    AdvertisementDAO DAO;
 
-
-    public AdvertisementServiceImpl(){
-        DAO = new AdvertisementDAOImpl();
+    @Autowired
+    public AdvertisementServiceImpl(@Qualifier("advertisementDAOImpl") AdvertisementDAO DAO) {
+        this.DAO = DAO;
     }
 
     @Override

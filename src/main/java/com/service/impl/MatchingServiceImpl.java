@@ -1,74 +1,47 @@
 package com.service.impl;
 
+import com.dao.CrudDAO;
 import com.domain.MatchingAd;
-import com.service.MatchingAdService;
+import com.service.CRUDService;
+import com.validation.Validation;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
+@Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class MatchingServiceImpl implements CRUDService<MatchingAd> {
 
 
-public class MatchingServiceImpl implements MatchingAdService {
+    CrudDAO<MatchingAd> DAO;
 
-    public static final EntityManagerFactory FACTORY =
-            Persistence.createEntityManagerFactory("bulletin_board");
-
+    @Autowired
+    public MatchingServiceImpl(CrudDAO<MatchingAd> dao) {
+        this.DAO = dao;
+    }
 
     @Override
     public void save(MatchingAd matchingAd) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction trans = em.getTransaction();
+        Validation.validation(matchingAd);
+        DAO.save(matchingAd);
 
-        trans.begin();
-
-        em.persist(matchingAd);
-
-        trans.commit();
-
-        em.close();
     }
 
     @Override
     public void update(MatchingAd matchingAd) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
+        DAO.update(matchingAd);
 
-        tran.begin();
-
-        MatchingAd matchingAd1 = em.merge(matchingAd);
-
-        em.persist(matchingAd1);
-
-        tran.commit();
-
-        em.close();
     }
 
     @Override
     public MatchingAd findById(int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
+       return DAO.findById(id);
 
-        tran.begin();
-
-        MatchingAd matchingAd = em.find(MatchingAd.class, id);
-
-        tran.commit();
-
-        em.close();
-
-        return matchingAd;
     }
 
     @Override
     public void deleteById(int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-
-        Query query =
-                em.createQuery("DELETE FROM MatchingAd m WHERE m.id = :m_id");
-        query.setParameter("m_id", id);
-
-        trans.commit();
-
-        em.close();
+        DAO.deleteById(id);
     }
 }

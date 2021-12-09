@@ -6,17 +6,25 @@ import com.domain.Advertisement;
 import com.domain.Author;
 import com.service.AuthorService;
 import com.validation.Validation;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthorServiceImpl implements AuthorService {
 
-    public final AuthorDAO DAO;
+    AuthorDAO DAO;
 
-    public AuthorServiceImpl() {
-        DAO = new AuthorDAOImpl();
+    @Autowired
+    public AuthorServiceImpl(@Qualifier("authorDAOImpl") AuthorDAO DAO) {
+        this.DAO = DAO;
     }
+
 
     @Override
     public void save(Author author) {

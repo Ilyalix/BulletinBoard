@@ -8,64 +8,54 @@ import com.service.AdvertisementService;
 import com.domain.Advertisement;
 import com.service.EmailService;
 import com.service.impl.EmailsServiceImpl;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
+@Repository
+@Transactional
 public class AdvertisementDAOImpl implements AdvertisementDAO {
 
-    public static final EntityManagerFactory FACTORY =
-            Persistence.createEntityManagerFactory("bulletin_board");
+    @PersistenceContext
+    private EntityManager em;
+
 
     private EmailService emailService;
 
-    public AdvertisementDAOImpl() {
-        emailService = new EmailsServiceImpl();
+    @Autowired
+    public AdvertisementDAOImpl(EmailService emailService) {
+        this.emailService = emailService;
     }
 
 
     @Override
     public void save(Advertisement advertisement) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-
-        trans.begin();
 
         em.persist(advertisement);
 
         emailService.sendEmails(advertisement);
 
-        trans.commit();
-
-        em.close();
     }
 
     @Override
     public void update(Advertisement advertisement) {
 
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
-
         Advertisement advertisement1 = em.merge(advertisement);
 
         em.persist(advertisement1);
 
-        tran.commit();
-
-        em.close();
     }
 
     @Override
     public Advertisement findById(int id) {
-
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
@@ -82,19 +72,11 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         TypedQuery<Advertisement> query1 = em.createQuery(query);
         Advertisement advertisement = query1.getSingleResult();
 
-        tran.commit();
-
-        em.close();
-
         return advertisement;
     }
 
     @Override
     public List<Advertisement> findAdvertisementByCategory(int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         TypedQuery<Advertisement> query =
                 em.createQuery("FROM Advertisement c WHERE c.category.id = :a_id", Advertisement.class);
@@ -102,19 +84,11 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         List<Advertisement> list = query.getResultList();
 
-        tran.commit();
-        em.close();
-
         return list;
     }
 
     @Override
     public List<Advertisement> findAdvertisementByCategories(List<Integer> ids) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
-
 
         TypedQuery<Advertisement> query =
                 em.createQuery("FROM Advertisement c WHERE c.category.id IN :a_ids", Advertisement.class);
@@ -122,20 +96,12 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         List<Advertisement> list = query.getResultList();
 
-        tran.commit();
-        em.close();
-
         return list;
     }
 
 
-
     @Override
     public List<Advertisement> searchByWord(String text) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         TypedQuery<Advertisement> query =
                 em.createQuery("FROM Advertisement c WHERE c.text LIKE '%' || :text || '%'", Advertisement.class);    // '%text%'
@@ -143,19 +109,12 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         List<Advertisement> list = query.getResultList();
 
-        tran.commit();
-        em.close();
-
         return list;
 
     }
 
     @Override
     public List<Advertisement> searchByDate(LocalDate dateOfPublic) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         TypedQuery<Advertisement> query =
                 em.createQuery("FROM Advertisement c WHERE c.dateOfPublic LIKE :date", Advertisement.class);
@@ -163,19 +122,12 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         List<Advertisement> list = query.getResultList();
 
-        tran.commit();
-        em.close();
-
         return list;
 
     }
 
 
     public void deleteAdvertisementByAuthor(int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         Query query =
                 em.createQuery("DELETE FROM Advertisement c WHERE c.author.id = :a_id");
@@ -183,17 +135,10 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         query.executeUpdate();
 
-        tran.commit();
-        em.close();
-
     }
 
     @Override
     public void deleteById(int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
@@ -209,9 +154,6 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         query.executeUpdate();
 
         query.executeUpdate();
-
-        tran.commit();
-        em.close();
     }
 }
 

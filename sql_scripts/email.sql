@@ -1,1 +1,1 @@
-CREATE TABLE email (email_id int, email VARCHAR(255), version int);
+CREATE TABLE email (email_id INT PRIMARY KEY AUTO_INCREMENT, email VARCHAR(255), version INT);

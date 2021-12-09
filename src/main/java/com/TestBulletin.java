@@ -1,26 +1,30 @@
 package com;
 
+import com.config.ConfigApp;
+import com.dao.impl.MatchingDAOImpl;
 import com.domain.*;
 import com.service.*;
 import com.service.impl.AdvertisementServiceImpl;
 import com.service.impl.AuthorServiceImpl;
 import com.service.impl.CategoryServiceImpl;
 import com.service.impl.MatchingServiceImpl;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@Transactional
 public class TestBulletin {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("bulletin_board");
-        EntityManager em = factory.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigApp.class);
 
-        tran.begin();
 
         Email gmail = Email.builder()
                 .email("gmail.com")
@@ -69,60 +73,28 @@ public class TestBulletin {
 
         Author dasha = Author.builder()
                 .name("Masha")
-                .email(gmail)
+                .email(mail)
                 .phones(List.of(number4, number5))
-                .address(peterburg)
+                .address(orsk)
                 .build();
         number4.setAuthor(dasha);
         number5.setAuthor(dasha);
 
         Author vadim = Author.builder()
-                .name("Vadimussssssssssssssss")
+                .name("Masha")
                 .email(rambler)
-                .phones(List.of(number1, number2))
-                .address(berlin)
+                .phones(List.of(number5))
+                .address(moscow)
                 .build();
-        number1.setAuthor(vadim);
-        number2.setAuthor(vadim);
+        number5.setAuthor(vadim);
+      //  number2.setAuthor(vadim);
 
-
-/*
-        artem.setAddress(peterburg);
-        artem.addPhones(number1);
-        artem.addPhones(number4);
-
-        makar.setAddress(orsk);
-        makar.addPhones(number7);
-
-        bill.setAddress(berlin);
-        bill.addPhones(number6);
-
-        kirill.setAddress(london);
-        kirill.addPhones(number7);*/
-
-//        number1.setAuthor(artem);
-
-   /*     number4.setAuthor(artem);
-        number7.setAuthor(makar);
-        number6.setAuthor(bill);
-        number7.setAuthor(kirill);
-
-
-        artem.setEmail(yahoo);
-        makar.setEmail(mail);
-
-        bill.setEmail(rambler);
-        kirill.setEmail(yahoo);
-*/
-
-//        em.persist(bill);
-//        em.persist(kirill);
 
 
         // найти автора по id
-        Author authorLot1 = em.getReference(Author.class, 57);
+//        Author authorLot1 = em.getReference(Author.class, 57);
         // найти категорию по id
-        Category categoryLot1 = em.getReference(Category.class, 35);
+//        Category categoryLot1 = em.getReference(Category.class, 35);
 
 //        Advertisement lot1 = new Advertisement("Nissan", 2019 - 01 - 01, "продам",
 //                5.500, author);
@@ -142,14 +114,19 @@ public class TestBulletin {
         Advertisement lot5 = new Advertisement("Velo", LocalDate.of(2020, 4, 7), "продам вело",
                 BigDecimal.valueOf(3.5));*/
 
-        Advertisement lot5 = Advertisement.builder()
-                .name("Phone")
-                .dateOfPublic(LocalDate.of(2021, 4, 7))
-                .text("продам")
-                .price(BigDecimal.valueOf(1.5))
-                .build();
-        lot5.setCategory(categoryLot1);
-        lot5.setAuthor(authorLot1);
+
+        EntityManagerFactory bean = context.getBean(EntityManagerFactory.class);
+        EntityManager entityManager = bean.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        Category category1 = entityManager.find(Category.class, 1);
+        System.out.println(category1);
+
+        transaction.commit();
+
+
 
 
 //        Category category = em.getReference(Category.class, 9);
@@ -177,21 +154,20 @@ public class TestBulletin {
         //       em.persist(advertisement);
 
 
-        Author authorNew = em.getReference(Author.class, 131);
-        Category categoryNew = em.getReference(Category.class, 216);
+       /* Author authorNew = em.getReference(Author.class, 1);
+        System.out.println(authorNew);*/
+    //   Category categoryNew = em.getReference(Category.class, 216);
 
 
-        CRUDService<Category> service = new CategoryServiceImpl();
+        CRUDService<Category> categoryService = context.getBean(CategoryServiceImpl.class);
 
 
-        //    Category newCaregory = new Category("Furniture");
-
-        Category newCaregory = Category.builder()
-                .name("Comp")
+        Category caregory = Category.builder()
+                .name("House")
                 .build();
-//        service.save(newCaregory);
+ //       categoryService.save(caregory);
 
-        Category category = service.findById(45);
+        Category category = categoryService.findById(7);
 //        System.out.println(category);
 
         //     category.setName("Toys");
@@ -201,13 +177,11 @@ public class TestBulletin {
         //     service.deleteById(266);
 
 
-        AuthorService author = new AuthorServiceImpl();
+        AuthorService authorService = context.getBean(AuthorServiceImpl.class);
+      //  authorService.save(vadim);
+        Author author = authorService.findById(3);
 
-        //   author.save(dasha);
-        //   author.save(vadim);
-
-      /* Author author1 = author.findById(15);
-        System.out.println(author1);*/
+      //  System.out.println(author);
 
         // authorNew.setName("Dasha");
         // author.update(authorNew);
@@ -220,10 +194,23 @@ public class TestBulletin {
         }*/
 
 
-        AdvertisementService advertisement = new AdvertisementServiceImpl();
-        // advertisement.save(lot5);
+        AdvertisementService advertisementService = context.getBean(AdvertisementServiceImpl.class);
 
-        Advertisement advertisementNew = advertisement.findById(64);
+
+        Advertisement lot1 = Advertisement.builder()
+                .name("House")
+                .dateOfPublic(LocalDate.of(2020, 3, 10))
+                .text("продам дом")
+                .price(BigDecimal.valueOf(1.5))
+                .build();
+        lot1.setCategory(category);
+        lot1.setAuthor(author);
+
+    //    advertisementService.save(lot1);
+
+
+
+       //        Advertisement advertisementNew = advertisement.findById(64);
         //System.out.println(advertisementNew);
    /*     advertisementNew.setAuthor(authorNew);
         advertisementNew.setCategory(categoryNew);
@@ -255,21 +242,20 @@ public class TestBulletin {
 
         //  advertisement.deleteById(272);
 
+        CRUDService<MatchingAd> matchingService = context.getBean(MatchingServiceImpl.class);
 
-        MatchingAdService matchingAdService = new MatchingServiceImpl();
 
-
-        MatchingAd matchingAd = MatchingAd
+        MatchingAd matchingAdNew = MatchingAd
                 .builder()
-                .title("продам велосипед")
+                .title("продам дом")
                 .priceFrom(BigDecimal.valueOf(1))
                 .priceTo(BigDecimal.valueOf(2))
-                .category(categoryNew)
-                .author(authorNew)
+                .category(category)
+                .author(author)
                 .build();
         //  MatchingAd matchingAd = new MatchingAd("продам вело", BigDecimal.valueOf(3), BigDecimal.valueOf(4), categoryNew, authorNew);
 
-//       matchingAdService.save(matchingAd);
+     //  matchingService.save(matchingAdNew);
 
 
 //        em.persist(Lot2);
@@ -281,10 +267,5 @@ public class TestBulletin {
         // сохранить новое объявление с сущ автором и категорией
         // em.persist(Lot5);
 
-        tran.commit();
-
-        em.close();
-
-        factory.close();
     }
 }

@@ -3,62 +3,38 @@ package com.dao.impl;
 import com.dao.CrudDAO;
 import com.domain.Category;
 import com.domain.Category_;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+@Repository
+@Transactional
 public class CategoryDAOImpl implements CrudDAO<Category> {
-    public static final EntityManagerFactory FACTORY =
-            Persistence.createEntityManagerFactory("bulletin_board");
 
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public void save(Category category) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
 
-        tran.begin();
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-
-        CriteriaQuery<Category> query = builder.createQuery(Category.class);
-
-        Root<Category> root = query.from(Category.class);
-
-
-//        em.persist(category);
-
-        tran.commit();
-
-        em.close();
+        em.persist(category);
 
     }
 
     @Override
     public void update(Category category) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         Category category1 = em.merge(category);
 
         em.persist(category1);
-
-        tran.commit();
-
-        em.close();
     }
 
     @Override
     public Category findById(int id) {
-
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
@@ -75,19 +51,11 @@ public class CategoryDAOImpl implements CrudDAO<Category> {
         TypedQuery<Category> query1 = em.createQuery(query);
         Category category = query1.getSingleResult();
 
-        tran.commit();
-
-        em.close();
-
         return category;
     }
 
     @Override
-    public void deleteById (int id) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
+    public void deleteById(int id) {
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
@@ -101,10 +69,5 @@ public class CategoryDAOImpl implements CrudDAO<Category> {
 
         Query query = em.createQuery(criteriaDelete);
         query.executeUpdate();
-
-        tran.commit();
-
-        em.close();
     }
-
 }

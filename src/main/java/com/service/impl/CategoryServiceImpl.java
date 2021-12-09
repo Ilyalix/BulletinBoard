@@ -1,17 +1,24 @@
 package com.service.impl;
 
 import com.dao.CrudDAO;
-import com.dao.impl.CategoryDAOImpl;
 import com.domain.Category;
 import com.service.CRUDService;
 import com.validation.Validation;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CategoryServiceImpl implements CRUDService<Category> {
 
-    public final CrudDAO<Category> DAO;
+   CrudDAO<Category> DAO;
 
-    public CategoryServiceImpl() {
-        DAO = new CategoryDAOImpl();
+   @Autowired
+    public CategoryServiceImpl(@Qualifier("categoryDAOImpl") CrudDAO<Category> dao) {
+        this.DAO = dao;
     }
 
     @Override

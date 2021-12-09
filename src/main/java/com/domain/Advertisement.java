@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class Advertisement {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "advertisement_id")
     int id;
 

@@ -1,1 +1,1 @@
-CREATE TABLE address (address_id int, city VARCHAR(255), version int);
+CREATE TABLE address (address_id INT PRIMARY KEY AUTO_INCREMENT, city VARCHAR(255), version INT);
