@@ -7,6 +7,7 @@ import com.domain.Author;
 import com.service.AuthorService;
 import com.validation.Validation;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +25,6 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorServiceImpl(@Qualifier("authorDAOImpl") AuthorDAO DAO) {
         this.DAO = DAO;
     }
-
 
     @Override
     public void save(Author author) {

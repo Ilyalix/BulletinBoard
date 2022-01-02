@@ -1,20 +1,17 @@
 package com.dao.impl;
 
 import com.dao.AdvertisementDAO;
-import com.domain.Advertisement_;
-import com.domain.Category;
-import com.domain.Category_;
-import com.service.AdvertisementService;
 import com.domain.Advertisement;
+import com.domain.Advertisement_;
 import com.service.EmailService;
-import com.service.impl.EmailsServiceImpl;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -41,16 +38,21 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
         em.persist(advertisement);
 
-        emailService.sendEmails(advertisement);
+
 
     }
 
     @Override
     public void update(Advertisement advertisement) {
 
-        Advertisement advertisement1 = em.merge(advertisement);
+        Advertisement advertisementDB = em.find(Advertisement.class, advertisement.getId());
+        int version = advertisementDB.getVersion();
+        advertisement.setVersion(version);
 
-        em.persist(advertisement1);
+        Advertisement advertisementNew = em.merge(advertisement);
+        em.persist(advertisementNew);
+
+        emailService.sendEmails(advertisement);
 
     }
 

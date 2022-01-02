@@ -1,0 +1,119 @@
+Author:
+POST:
+{
+	"name": "Vasya",
+	"phones": [{
+			"phone": 111
+		},
+		{
+			"phone": 222
+		}
+	],
+	"address": {
+		"city": "NY"
+	},
+	"email": {
+		"email": "rambler.ru"
+	}
+}
+CascadeType.MERGE and PERSIST
+
+PUT:
+{
+  "id": 10,
+  "name": "Petya",
+  "phones": [
+    {
+      "id":5,
+      "phone": 6655
+    },
+    {
+      "id":6,
+      "phone": 7788
+    }
+  ],
+  "address": {
+    "id":1,
+    "city": "NY"
+  },
+  "email": {
+    "id":1,
+    "email": "rambler.ru"
+  }
+}
+
+
+CATEGORY:
+POST:
+{
+    "name": "Clothes"
+}
+
+PUT:
+{
+  "id":8,
+  "name": "Clothes"
+}
+
+ADVERTISEMENT:
+POST:
+{
+  "id": 0,
+  "name": "Avto",
+  "dateOfPublic": "2021-10-10",
+  "text": "продам",
+  "price": 1500
+}
+
+PUT:
+{
+  "id": 9,
+  "name": "Avto",
+  "dateOfPublic": "2021-10-10",
+  "text":"продам",
+  "price": 2,
+  "author": {
+    "id": 2
+  },
+  "category": {
+    "id": 4
+  }
+}
+
+matchingAd:
+POST:
+{
+  "id": 0,
+  "title": "Продам дом",
+   "priceTo": 2,
+   "priceFrom": 10
+}
+
+PUT:
+{
+  "id": 2,
+  "title": "Продам дом",
+   "priceTo": 2,
+   "priceFrom": 10,
+   "author": {
+    "id": 5
+  },
+  "category": {
+    "id": 7
+  }
+}
+
+
+
+
+
+
+AuthorDAOImpl
+
+        List<Phone> collect = author.getPhones().stream().filter(m -> m.getId() == 5).collect(Collectors.toList());
+        System.out.println(collect);
+
+        List<Phone> collect1 = author.getPhones().stream().peek(k -> k.getPhone()).collect(Collectors.toList());
+        System.out.println(collect1);
+
+

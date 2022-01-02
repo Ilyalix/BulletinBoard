@@ -197,14 +197,14 @@ public class TestBulletin {
         AdvertisementService advertisementService = context.getBean(AdvertisementServiceImpl.class);
 
 
-        Advertisement lot1 = Advertisement.builder()
+  /*      Advertisement lot1 = Advertisement.builder()
                 .name("House")
                 .dateOfPublic(LocalDate.of(2020, 3, 10))
                 .text("продам дом")
                 .price(BigDecimal.valueOf(1.5))
                 .build();
         lot1.setCategory(category);
-        lot1.setAuthor(author);
+        lot1.setAuthor(author);*/
 
     //    advertisementService.save(lot1);
 
@@ -256,6 +256,8 @@ public class TestBulletin {
         //  MatchingAd matchingAd = new MatchingAd("продам вело", BigDecimal.valueOf(3), BigDecimal.valueOf(4), categoryNew, authorNew);
 
      //  matchingService.save(matchingAdNew);
+
+     //   matchingService.findById(5);
 
 
 //        em.persist(Lot2);

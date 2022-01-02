@@ -28,9 +28,13 @@ public class CategoryDAOImpl implements CrudDAO<Category> {
     @Override
     public void update(Category category) {
 
-        Category category1 = em.merge(category);
+        Category categoryDB = em.find(Category.class, category.getId());
+        int version = categoryDB.getVersion();
+        category.setVersion(version);
 
+        Category category1 = em.merge(category);
         em.persist(category1);
+
     }
 
     @Override

@@ -1,11 +1,8 @@
 package com.dao.impl;
 
 import com.dao.AuthorDAO;
-import com.domain.Advertisement_;
-import com.domain.Author_;
+import com.domain.*;
 import com.service.AuthorService;
-import com.domain.Advertisement;
-import com.domain.Author;
 import net.bytebuddy.dynamic.scaffold.InstrumentedType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Repository
 @Transactional
@@ -25,14 +27,32 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void save(Author author) {
 
+        author.getPhones().forEach(p -> p.setAuthor(author));
         em.persist(author);
+
     }
 
     @Override
     public void update(Author author) {
 
-        Author author1 = em.merge(author);
+        Author authorDB = em.find(Author.class, author.getId());
+        int version = authorDB.getVersion();
+        author.setVersion(version);
 
+        int Addressid = author.getAddress().getId();
+        Address address = em.find(Address.class, Addressid);
+        int version1 = address.getVersion();
+        author.getAddress().setVersion(version1);
+
+        int EmailId = author.getEmail().getId();
+        Email email = em.find(Email.class, EmailId);
+        int version2 = email.getVersion();
+        author.getEmail().setVersion(version2);
+
+
+        author.getPhones().forEach(p -> p.setAuthor(author));
+
+        Author author1 = em.merge(author);
         em.persist(author1);
     }
 

@@ -26,6 +26,11 @@ public class MatchingDAOImpl implements CrudDAO<MatchingAd> {
     @Override
     public void update(MatchingAd matchingAd) {
 
+        MatchingAd matchingAdDB = em.find(MatchingAd.class, matchingAd.getId());
+        int version = matchingAdDB.getVersion();
+
+        matchingAd.setVersion(version);
+
         MatchingAd matchingAd1 = em.merge(matchingAd);
 
         em.persist(matchingAd1);

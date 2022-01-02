@@ -1,6 +1,8 @@
 package com.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,6 +19,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
