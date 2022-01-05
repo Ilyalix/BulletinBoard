@@ -30,7 +30,7 @@ public class Author {
     int id;
 
     @NotNull
-    @Size(max = 10)
+    @Size(max = 10, message = "size should by below then 10 symbols")
     String name;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy = "author", fetch = FetchType.EAGER)

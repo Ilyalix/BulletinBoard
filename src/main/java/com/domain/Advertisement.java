@@ -34,7 +34,7 @@ public class Advertisement {
     int id;
 
     @NotNull
-    @Size(max = 10)
+    @Size(max = 10,  message = "size should by below then 10 symbols")
     String name;
 
     @JsonSerialize(using = LocalDateSerializer.class)
