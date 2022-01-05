@@ -27,30 +27,11 @@ public class AuthorDAOImpl implements AuthorDAO {
     @Override
     public void save(Author author) {
 
-        author.getPhones().forEach(p -> p.setAuthor(author));
         em.persist(author);
-
     }
 
     @Override
     public void update(Author author) {
-
-        Author authorDB = em.find(Author.class, author.getId());
-        int version = authorDB.getVersion();
-        author.setVersion(version);
-
-        int Addressid = author.getAddress().getId();
-        Address address = em.find(Address.class, Addressid);
-        int version1 = address.getVersion();
-        author.getAddress().setVersion(version1);
-
-        int EmailId = author.getEmail().getId();
-        Email email = em.find(Email.class, EmailId);
-        int version2 = email.getVersion();
-        author.getEmail().setVersion(version2);
-
-
-        author.getPhones().forEach(p -> p.setAuthor(author));
 
         Author author1 = em.merge(author);
         em.persist(author1);

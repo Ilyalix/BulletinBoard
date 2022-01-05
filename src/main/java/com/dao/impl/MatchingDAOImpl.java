@@ -26,11 +26,6 @@ public class MatchingDAOImpl implements CrudDAO<MatchingAd> {
     @Override
     public void update(MatchingAd matchingAd) {
 
-        MatchingAd matchingAdDB = em.find(MatchingAd.class, matchingAd.getId());
-        int version = matchingAdDB.getVersion();
-
-        matchingAd.setVersion(version);
-
         MatchingAd matchingAd1 = em.merge(matchingAd);
 
         em.persist(matchingAd1);
@@ -51,6 +46,7 @@ public class MatchingDAOImpl implements CrudDAO<MatchingAd> {
         Query query =
                 em.createQuery("DELETE FROM MatchingAd m WHERE m.id = :m_id");
         query.setParameter("m_id", id);
+        query.executeUpdate();
 
     }
 }

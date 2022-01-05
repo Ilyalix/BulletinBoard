@@ -25,7 +25,7 @@ public class MatchingController {
         matchingAdService.save(matchingAd);
     }
 
-    @PutMapping(value = "put")
+    @PutMapping(value = "update")
     public void update(@Valid @RequestBody MatchingAd matchingAd){
         matchingAdService.update(matchingAd);
     }

@@ -30,7 +30,7 @@ public class AdvertisementController {
         advertisementService.save(advertisement);
     }
 
-    @PutMapping(value = "put")
+    @PutMapping(value = "update")
     public void update(@Valid @RequestBody Advertisement advertisement){
         advertisementService.update(advertisement);
     }
@@ -55,9 +55,12 @@ public class AdvertisementController {
         return advertisementService.searchByWord(text);
     }
 
-    @GetMapping(value = "searchByDate/{data}") //
-    public List<Advertisement> searchByDate(@PathVariable(value = "data") LocalDate data) {
-        return advertisementService.searchByDate(data);
+    @GetMapping(value = "searchByDate/{date}") //
+    public List<Advertisement> searchByDate(@PathVariable(value = "date") String date) {
+
+        LocalDate localDate = LocalDate.parse(date);
+
+        return advertisementService.searchByDate(localDate);
     }
 
     @DeleteMapping(value = "deleteAdvertisementByAuthor/{id}")

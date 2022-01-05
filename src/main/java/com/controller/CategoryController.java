@@ -27,7 +27,7 @@ public class CategoryController {
         categoryService.save(category);
     }
 
-    @PutMapping(value = "put")
+    @PutMapping(value = "update")
     public void update(@Valid @RequestBody Category category){
         categoryService.update(category);
     }

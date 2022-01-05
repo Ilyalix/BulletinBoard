@@ -26,7 +26,7 @@ public class AuthorController {
         authorService.save(author);
     }
 
-    @PutMapping(value = "put")
+    @PutMapping(value = "update")
     public void update(@Valid @RequestBody Author author){
         authorService.update(author);
     }

@@ -37,22 +37,15 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
     public void save(Advertisement advertisement) {
 
         em.persist(advertisement);
-
-
+        emailService.sendEmails(advertisement);
 
     }
 
     @Override
     public void update(Advertisement advertisement) {
 
-        Advertisement advertisementDB = em.find(Advertisement.class, advertisement.getId());
-        int version = advertisementDB.getVersion();
-        advertisement.setVersion(version);
-
         Advertisement advertisementNew = em.merge(advertisement);
         em.persist(advertisementNew);
-
-        emailService.sendEmails(advertisement);
 
     }
 
@@ -119,7 +112,7 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
     public List<Advertisement> searchByDate(LocalDate dateOfPublic) {
 
         TypedQuery<Advertisement> query =
-                em.createQuery("FROM Advertisement c WHERE c.dateOfPublic LIKE :date", Advertisement.class);
+                em.createQuery("FROM Advertisement c WHERE c.dateOfPublic = :date", Advertisement.class);
         query.setParameter("date", dateOfPublic);
 
         List<Advertisement> list = query.getResultList();

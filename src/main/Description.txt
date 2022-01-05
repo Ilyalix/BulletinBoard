@@ -1,105 +1,148 @@
 Author:
 POST:
-{
+{   "id": 0,
+    "version": 0,
 	"name": "Vasya",
 	"phones": [{
-			"phone": 111
+	         "id": 0,
+             "version": 0,
+		     "phone": 111
 		},
 		{
-			"phone": 222
+		     "id": 0,
+             "version": 0,
+		     "phone": 222
 		}
 	],
 	"address": {
-		"city": "NY"
+	         "id": 0,
+             "version": 0,
+	         "city": "NY"
 	},
 	"email": {
-		"email": "rambler.ru"
+             "id": 0,
+             "version": 0,
+	         "email": "rambler.ru"
 	}
 }
 CascadeType.MERGE and PERSIST
 
 PUT:
-{
-  "id": 10,
-  "name": "Petya",
-  "phones": [
     {
-      "id":5,
-      "phone": 6655
-    },
-    {
-      "id":6,
-      "phone": 7788
-    }
-  ],
-  "address": {
-    "id":1,
-    "city": "NY"
-  },
-  "email": {
-    "id":1,
-    "email": "rambler.ru"
-  }
+   "id": 13,
+   "name": "Petya",
+   "version": 0,
+   "phones": [
+     {
+       "id":19,
+       "version": 0,
+       "phone": 6655,
+       "author":13
+     },
+     {
+       "id":20,
+       "version": 0,
+       "phone": 7788,
+       "author":13
+     }
+   ],
+   "address": {
+     "id":13,
+     "version": 0,
+     "city": "Moscow"
+   },
+   "email": {
+     "id":13,
+     "version": 0,
+     "email": "vk.ru"
+   }
 }
 
 
 CATEGORY:
 POST:
 {
+    "id":0,
+    "version": 0,
     "name": "Clothes"
 }
 
 PUT:
 {
   "id":8,
+  "version": 0,
   "name": "Clothes"
 }
 
 ADVERTISEMENT:
-POST:
+POST: (указываем id сущ. автора и категории)
 {
   "id": 0,
-  "name": "Avto",
-  "dateOfPublic": "2021-10-10",
-  "text": "продам",
-  "price": 1500
+  "version": 0,
+  "name": "Moto",
+  "dateOfPublic": "2019-10-10",
+  "text": "отдам",
+  "price": 3,
+    "author": {
+      "id": 13,
+      "version": 0
+    },
+    "category": {
+      "id": 5,
+      "version": 0
+    }
 }
 
 PUT:
 {
-  "id": 9,
-  "name": "Avto",
-  "dateOfPublic": "2021-10-10",
-  "text":"продам",
-  "price": 2,
-  "author": {
-    "id": 2
-  },
-  "category": {
-    "id": 4
-  }
+  "id": 19,
+  "version": 0,
+  "name": "Moto",
+  "dateOfPublic": "2017-10-10",
+  "text": "отдам",
+  "price": 3,
+    "author": {
+      "id": 12,
+      "version": 0
+    },
+    "category": {
+      "id": 5,
+      "version": 0
+    }
 }
 
 matchingAd:
 POST:
 {
   "id": 0,
-  "title": "Продам дом",
-   "priceTo": 2,
-   "priceFrom": 10
-}
-
-PUT:
-{
-  "id": 2,
+  "version": 0,
   "title": "Продам дом",
    "priceTo": 2,
    "priceFrom": 10,
    "author": {
-    "id": 5
+          "id": 5,
+          "version": 0
+     },
+     "category": {
+          "id": 7,
+          "version": 0
+     }
+}
+
+PUT:
+{
+  "id": 6,
+  "version": 0,
+  "title": "Продам дом",
+   "priceTo": 2,
+   "priceFrom": 10,
+   "author": {
+       "id": 11,
+       "version": 2
   },
   "category": {
-    "id": 7
+       "id": 7,
+       "version": 0
   }
 }
 

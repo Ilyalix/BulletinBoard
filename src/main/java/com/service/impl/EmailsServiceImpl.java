@@ -42,8 +42,4 @@ public class EmailsServiceImpl implements EmailService {
 
         return emails;
     }
-
-//Mad, Author, Email, Category
-
-    //Mad -> Email
 }
