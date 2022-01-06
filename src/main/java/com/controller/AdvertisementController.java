@@ -25,50 +25,48 @@ public class AdvertisementController {
     AdvertisementService advertisementService;
 
 
-    @PostMapping(value = "save")
+    @PostMapping
     public void save(@Valid @RequestBody Advertisement advertisement){
         advertisementService.save(advertisement);
     }
 
-    @PutMapping(value = "update")
+    @PutMapping
     public void update(@Valid @RequestBody Advertisement advertisement){
         advertisementService.update(advertisement);
     }
 
-    @GetMapping(value = "find/{id}")
+    @GetMapping(value = "{id}")
     public Advertisement findById(@PathVariable(value = "id") int id) {
         return advertisementService.findById(id);
     }
 
-    @GetMapping(value = "findByCategory/{id}")
+    @GetMapping(value = "category/{id}")
     public List<Advertisement> findByCategory(@PathVariable(value = "id") int id) {
         return advertisementService.findAdvertisementByCategory(id);
     }
 
-    @GetMapping(value = "findByCategories/{ids}")
+    @GetMapping(value = "categories/{ids}")
     public List<Advertisement> findByCategories(@PathVariable(value = "ids") List<Integer> ids) {
         return advertisementService.findAdvertisementByCategories(ids);
     }
 
-    @GetMapping(value = "searchByWord/{text}") //
+    @GetMapping(value = "word/{text}") //
     public List<Advertisement> searchByWord(@PathVariable(value = "text") String text) {
         return advertisementService.searchByWord(text);
     }
 
-    @GetMapping(value = "searchByDate/{date}") //
+    @GetMapping(value = "date/{date}") //
     public List<Advertisement> searchByDate(@PathVariable(value = "date") String date) {
-
         LocalDate localDate = LocalDate.parse(date);
-
         return advertisementService.searchByDate(localDate);
     }
 
-    @DeleteMapping(value = "deleteAdvertisementByAuthor/{id}")
+    @DeleteMapping(value = "author/{id}")
     public void deleteAdvertisementByAuthor(@PathVariable(value = "id") int id) {
         advertisementService.deleteAdvertisementByAuthor(id);
     }
 
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
         advertisementService.deleteById(id);
     }

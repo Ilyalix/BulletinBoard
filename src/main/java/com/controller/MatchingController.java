@@ -20,22 +20,22 @@ public class MatchingController {
     @Autowired
     CRUDService<MatchingAd> matchingAdService;
 
-    @PostMapping(value = "save")
+    @PostMapping
     public void save(@Valid @RequestBody MatchingAd matchingAd){
         matchingAdService.save(matchingAd);
     }
 
-    @PutMapping(value = "update")
+    @PutMapping
     public void update(@Valid @RequestBody MatchingAd matchingAd){
         matchingAdService.update(matchingAd);
     }
 
-    @GetMapping(value = "find/{id}")
+    @GetMapping(value = "{id}")
     public MatchingAd findById(@PathVariable(value = "id") int id) {
         return matchingAdService.findById(id);
     }
 
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
         matchingAdService.deleteById(id);
     }

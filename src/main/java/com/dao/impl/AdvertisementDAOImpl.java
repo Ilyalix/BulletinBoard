@@ -5,6 +5,7 @@ import com.domain.Advertisement;
 import com.domain.Advertisement_;
 import com.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -148,6 +149,13 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         Query query = em.createQuery(criteriaDelete);
         query.executeUpdate();
 
+        query.executeUpdate();
+    }
+
+    @Scheduled(cron = "0 10 1 * * *")
+    public void delete() {
+        Query query =
+                em.createQuery("DELETE FROM Advertisement c WHERE c.isActive = false ");
         query.executeUpdate();
     }
 }

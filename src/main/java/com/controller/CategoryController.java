@@ -22,22 +22,22 @@ public class CategoryController {
     @Autowired
     CRUDService<Category> categoryService;
 
-    @PostMapping(value = "save")
+    @PostMapping
     public void save(@Valid @RequestBody Category category){
         categoryService.save(category);
     }
 
-    @PutMapping(value = "update")
+    @PutMapping
     public void update(@Valid @RequestBody Category category){
         categoryService.update(category);
     }
 
-    @GetMapping(value = "find/{id}")
+    @GetMapping(value = "{id}")
     public Category findById(@PathVariable(value = "id") int id) {
         return categoryService.findById(id);
     }
 
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
         categoryService.deleteById(id);
     }

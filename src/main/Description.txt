@@ -79,6 +79,7 @@ POST: (указываем id сущ. автора и категории)
 {
   "id": 0,
   "version": 0,
+  "active": 1,
   "name": "Moto",
   "dateOfPublic": "2019-10-10",
   "text": "отдам",
@@ -97,6 +98,7 @@ PUT:
 {
   "id": 19,
   "version": 0,
+  "active": 1,
   "name": "Moto",
   "dateOfPublic": "2017-10-10",
   "text": "отдам",
