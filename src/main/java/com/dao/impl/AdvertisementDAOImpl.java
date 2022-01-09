@@ -152,7 +152,7 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
         query.executeUpdate();
     }
 
-    @Scheduled(cron = "0 10 1 * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void delete() {
         Query query =
                 em.createQuery("DELETE FROM Advertisement c WHERE c.isActive = false ");

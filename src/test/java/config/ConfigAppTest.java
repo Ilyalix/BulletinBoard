@@ -1,8 +1,9 @@
-package com.config;
+package config;
 
-import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -24,9 +25,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling
-@PropertySource("classpath:db.properties")
-public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
-    private Environment env;
+public class ConfigAppTest implements WebMvcConfigurer {
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory factory) {
@@ -39,16 +38,13 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
     }
 
     @Bean
-     public DataSource dataSource() {
+    public DataSource dataSource() {
         DriverManagerDataSource source = new DriverManagerDataSource();
 
-        String userName = env.getProperty("jdbc.username");
-        String password = env.getProperty("jdbc.password");
-
         source.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        source.setUsername(userName);
-        source.setPassword(password);
-        source.setUrl("jdbc:mysql://localhost:3306/bulletin_jpa?serverTimezone=Europe/Berlin");
+        source.setUsername("root");
+        source.setPassword("12345");
+        source.setUrl("jdbc:mysql://localhost:3306/bulletin_jpa-test?serverTimezone=Europe/Berlin");
 
         return source;
     }
@@ -59,7 +55,7 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
         adapter.setDatabase(Database.MYSQL);
         adapter.setShowSql(true);
         adapter.setDatabasePlatform("org.hibernate.dialect.MySQL8Dialect");
-        adapter.setGenerateDdl(false);
+        adapter.setGenerateDdl(true);
         return adapter;
     }
 
@@ -73,11 +69,6 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
 
         return emfb;
 
-    }
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.env = environment;
     }
 
    /* @Bean

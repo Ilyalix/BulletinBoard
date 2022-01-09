@@ -2,19 +2,12 @@ package com.dao.impl;
 
 import com.dao.AuthorDAO;
 import com.domain.*;
-import com.service.AuthorService;
-import net.bytebuddy.dynamic.scaffold.InstrumentedType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+
 
 @Repository
 @Transactional
@@ -54,9 +47,8 @@ public class AuthorDAOImpl implements AuthorDAO {
         query.select(root);
 
         TypedQuery<Author> query1 = em.createQuery(query);
-        Author author = query1.getSingleResult();
+        return query1.getSingleResult();
 
-        return author;
     }
 
     @Override
