@@ -1,9 +1,7 @@
 package com.controller;
 
 import com.domain.Advertisement;
-import com.domain.Category;
 import com.service.AdvertisementService;
-import com.service.CRUDService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -50,12 +47,12 @@ public class AdvertisementController {
         return advertisementService.findAdvertisementByCategories(ids);
     }
 
-    @GetMapping(value = "word/{text}") //
+    @GetMapping(value = "word/{text}")
     public List<Advertisement> searchByWord(@PathVariable(value = "text") String text) {
         return advertisementService.searchByWord(text);
     }
 
-    @GetMapping(value = "date/{date}") //
+    @GetMapping(value = "date/{date}")
     public List<Advertisement> searchByDate(@PathVariable(value = "date") String date) {
         LocalDate localDate = LocalDate.parse(date);
         return advertisementService.searchByDate(localDate);

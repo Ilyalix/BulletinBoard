@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MatchingServiceImpl implements CRUDService<MatchingAd> {
 
-
     CrudDAO<MatchingAd> DAO;
 
     @Autowired

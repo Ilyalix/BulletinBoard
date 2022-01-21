@@ -12,9 +12,4 @@ public interface AuthorService extends CRUDService<Author> {
 
    List<Advertisement> findAdvertisementByIdAuthor(List<Integer> ids);
 
-//    private static void show(){
-//        System.out.println("sss");
-//    }
-
-
 }

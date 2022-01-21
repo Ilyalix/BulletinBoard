@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = {"com.service.impl", "com.dao.impl", "com.controller", "com.exception_handler"})
-@EnableWebMvc
+//@EnableWebMvc
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling

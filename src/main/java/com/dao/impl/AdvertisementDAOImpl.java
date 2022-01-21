@@ -25,8 +25,9 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
     @PersistenceContext
     private EntityManager em;
 
-
     private EmailService emailService;
+
+
 
     @Autowired
     public AdvertisementDAOImpl(EmailService emailService) {
@@ -36,7 +37,6 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
     @Override
     public void save(Advertisement advertisement) {
-
         em.persist(advertisement);
         emailService.sendEmails(advertisement);
 
@@ -44,7 +44,6 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
     @Override
     public void update(Advertisement advertisement) {
-
         Advertisement advertisementNew = em.merge(advertisement);
         em.persist(advertisementNew);
 

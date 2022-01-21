@@ -125,6 +125,7 @@ public class TestBulletin {
         System.out.println(category1);
 
         transaction.commit();
+//        entityManager.close();
 
 
 
@@ -162,13 +163,13 @@ public class TestBulletin {
         CRUDService<Category> categoryService = context.getBean(CategoryServiceImpl.class);
 
 
-        Category caregory = Category.builder()
+        Category categorynew = Category.builder()
                 .name("House")
                 .build();
- //       categoryService.save(caregory);
+ //       categoryService.save(categorynew);
 
         Category category = categoryService.findById(7);
-//        System.out.println(category);
+        System.out.println(category);
 
         //     category.setName("Toys");
 
@@ -197,16 +198,16 @@ public class TestBulletin {
         AdvertisementService advertisementService = context.getBean(AdvertisementServiceImpl.class);
 
 
-  /*      Advertisement lot1 = Advertisement.builder()
+        Advertisement lot1 = Advertisement.builder()
                 .name("House")
                 .dateOfPublic(LocalDate.of(2020, 3, 10))
                 .text("продам дом")
                 .price(BigDecimal.valueOf(1.5))
                 .build();
         lot1.setCategory(category);
-        lot1.setAuthor(author);*/
+        lot1.setAuthor(author);
 
-    //    advertisementService.save(lot1);
+      //  advertisementService.save(lot1);
 
 
 
@@ -242,17 +243,17 @@ public class TestBulletin {
 
         //  advertisement.deleteById(272);
 
-        CRUDService<MatchingAd> matchingService = context.getBean(MatchingServiceImpl.class);
+//        CRUDService<MatchingAd> matchingService = context.getBean(MatchingServiceImpl.class);
 
 
-        MatchingAd matchingAdNew = MatchingAd
+     /*   MatchingAd matchingAdNew = MatchingAd
                 .builder()
                 .title("продам дом")
                 .priceFrom(BigDecimal.valueOf(1))
                 .priceTo(BigDecimal.valueOf(2))
                 .category(category)
                 .author(author)
-                .build();
+                .build();*/
         //  MatchingAd matchingAd = new MatchingAd("продам вело", BigDecimal.valueOf(3), BigDecimal.valueOf(4), categoryNew, authorNew);
 
      //  matchingService.save(matchingAdNew);
@@ -268,6 +269,7 @@ public class TestBulletin {
 
         // сохранить новое объявление с сущ автором и категорией
         // em.persist(Lot5);
+//        bean.close();
 
     }
 }

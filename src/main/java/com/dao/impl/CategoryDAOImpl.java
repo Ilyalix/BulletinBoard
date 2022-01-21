@@ -20,14 +20,11 @@ public class CategoryDAOImpl implements CrudDAO<Category> {
 
     @Override
     public void save(Category category) {
-
         em.persist(category);
-
     }
 
     @Override
     public void update(Category category) {
-
         Category category1 = em.merge(category);
         em.persist(category1);
 

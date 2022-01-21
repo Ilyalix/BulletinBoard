@@ -16,16 +16,13 @@ public class AuthorDAOImpl implements AuthorDAO {
     @PersistenceContext
     private EntityManager em;
 
-
     @Override
     public void save(Author author) {
-
         em.persist(author);
     }
 
     @Override
     public void update(Author author) {
-
         Author author1 = em.merge(author);
         em.persist(author1);
     }
