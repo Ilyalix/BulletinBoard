@@ -34,7 +34,6 @@ public class EmailConfig implements EnvironmentAware {
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         properties.put("mail.smtp.starttls.enable", "true");
-
         return sender;
     }
 
