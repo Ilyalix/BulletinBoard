@@ -1,31 +1,62 @@
 package com.service.impl;
 
 import com.domain.Advertisement;
+import com.domain.Phone;
 import com.service.EmailService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.IntFunction;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Repository
 @Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmailsServiceImpl implements EmailService {
 
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
+
+    final JavaMailSender sender;
+
+    @Autowired
+    public EmailsServiceImpl(JavaMailSender sender) {
+        this.sender = sender;
+    }
 
     @Override
     public void sendEmails(Advertisement advertisement) {
-        List<String> emails = findAllSuitableEmails(advertisement);
-        //send emials
-        for (Object x : emails) {
-            System.out.println(x);
+        String[] emails = findAllSuitableEmails(advertisement);
+
+        if(emails.length>0){
+            SimpleMailMessage message = new SimpleMailMessage();
+
+            message.setTo(emails);
+            message.setSubject("Greetings");
+            message.setText("Added new ad with text " + advertisement.getText() +
+                    "\n price " + advertisement.getPrice() +
+                    "\n Author " + advertisement.getAuthor().getName());
+
+            sender.send(message);
         }
     }
 
-    private List<String> findAllSuitableEmails(Advertisement advertisement) {
+
+    private String[] findAllSuitableEmails(Advertisement advertisement) {
 
         TypedQuery<String> query = em.createQuery("SELECT e.email " +
                 "FROM MatchingAd m " +
@@ -38,8 +69,8 @@ public class EmailsServiceImpl implements EmailService {
         query.setParameter("m_cat", advertisement.getCategory().getId());
         query.setParameter("ad_price", advertisement.getPrice());
 
-        List<String> emails = query.getResultList();
+        IntFunction<String[]> function = size -> new String[size];
 
-        return emails;
+        return query.getResultStream().toArray(function);
     }
 }

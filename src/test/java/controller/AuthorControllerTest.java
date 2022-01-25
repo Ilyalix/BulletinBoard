@@ -117,8 +117,6 @@ public class AuthorControllerTest {
                 .andExpect(jsonPath("phones[0].phone").value("088"));
     }
 
-
-
     @Test
     public void shouldDeleteAuthor() throws Exception {
 

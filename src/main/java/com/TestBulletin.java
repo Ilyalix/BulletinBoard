@@ -207,7 +207,7 @@ public class TestBulletin {
         lot1.setCategory(category);
         lot1.setAuthor(author);
 
-      //  advertisementService.save(lot1);
+ //       advertisementService.save(lot1);
 
 
 
