@@ -3,6 +3,7 @@ package com.config;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -26,6 +27,7 @@ import javax.sql.DataSource;
 @EnableScheduling
 @Import(EmailConfig.class)
 @PropertySource("classpath:db.properties")
+@EnableJpaRepositories(basePackages = "com.repository")
 public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
     private Environment env;
 

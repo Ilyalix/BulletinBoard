@@ -3,6 +3,7 @@ package com.dao.impl;
 import com.dao.AdvertisementDAO;
 import com.domain.Advertisement;
 import com.domain.Advertisement_;
+import com.repository.AdvertisementRepository;
 import com.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,18 +17,17 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 @Transactional
 public class AdvertisementDAOImpl implements AdvertisementDAO {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    AdvertisementRepository repository;
 
     private EmailService emailService;
-
-
 
     @Autowired
     public AdvertisementDAOImpl(EmailService emailService) {
@@ -37,168 +37,53 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
     @Override
     public void save(Advertisement advertisement) {
-        em.persist(advertisement);
+        repository.save(advertisement);
         emailService.sendEmails(advertisement);
-
     }
 
     @Override
     public void update(Advertisement advertisement) {
-        Advertisement advertisementNew = em.merge(advertisement);
-        em.persist(advertisementNew);
-
+        repository.save(advertisement);
     }
 
     @Override
     public Advertisement findById(int id) {
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-
-        CriteriaQuery<Advertisement> query = builder.createQuery(Advertisement.class);
-
-        Root<Advertisement> root = query.from(Advertisement.class);
-
-        Path<Integer> pathId = root.get(Advertisement_.id);
-
-        query.where(builder.equal(pathId, id));
-
-        query.select(root);
-
-        TypedQuery<Advertisement> query1 = em.createQuery(query);
-        Advertisement advertisement = query1.getSingleResult();
-
-        return advertisement;
+        return repository.findById(id).get();
     }
 
     @Override
     public List<Advertisement> findAdvertisementByCategory(int id) {
-
-        TypedQuery<Advertisement> query =
-                em.createQuery("FROM Advertisement c WHERE c.category.id = :a_id", Advertisement.class);
-        query.setParameter("a_id", id);
-
-        List<Advertisement> list = query.getResultList();
-
-        return list;
+        return repository.findAdvertisementByCategory(id);
     }
 
     @Override
     public List<Advertisement> findAdvertisementByCategories(List<Integer> ids) {
-
-        TypedQuery<Advertisement> query =
-                em.createQuery("FROM Advertisement c WHERE c.category.id IN :a_ids", Advertisement.class);
-        query.setParameter("a_ids", ids);
-
-        List<Advertisement> list = query.getResultList();
-
-        return list;
+        return repository.findAdvertisementByCategories(ids);
     }
 
 
     @Override
     public List<Advertisement> searchByWord(String text) {
-
-        TypedQuery<Advertisement> query =
-                em.createQuery("FROM Advertisement c WHERE c.text LIKE '%' || :text || '%'", Advertisement.class);    // '%text%'
-        query.setParameter("text", text);
-
-        List<Advertisement> list = query.getResultList();
-
-        return list;
-
+        return repository.findAdvertisementByText(text);
     }
 
     @Override
     public List<Advertisement> searchByDate(LocalDate dateOfPublic) {
-
-        TypedQuery<Advertisement> query =
-                em.createQuery("FROM Advertisement c WHERE c.dateOfPublic = :date", Advertisement.class);
-        query.setParameter("date", dateOfPublic);
-
-        List<Advertisement> list = query.getResultList();
-
-        return list;
-
+        return repository.findAdvertisementByDateOfPublic(dateOfPublic);
     }
 
 
     public void deleteAdvertisementByAuthor(int id) {
-
-        Query query =
-                em.createQuery("DELETE FROM Advertisement c WHERE c.author.id = :a_id");
-        query.setParameter("a_id", id);
-
-        query.executeUpdate();
-
+        repository.deleteAdvertisementByAuthor(id);
     }
 
     @Override
     public void deleteById(int id) {
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-
-        CriteriaDelete<Advertisement> criteriaDelete = builder.createCriteriaDelete(Advertisement.class);
-
-        Root<Advertisement> root = criteriaDelete.from(Advertisement.class);
-
-        Path<Integer> pathId = root.get(Advertisement_.id);
-
-        criteriaDelete.where(builder.equal(pathId, id));
-
-        Query query = em.createQuery(criteriaDelete);
-        query.executeUpdate();
-
-        query.executeUpdate();
+        repository.deleteById(id);
     }
 
     @Scheduled(cron = "0 0 1 * * *")
     public void delete() {
-        Query query =
-                em.createQuery("DELETE FROM Advertisement c WHERE c.isActive = false ");
-        query.executeUpdate();
+        repository.deleteAdvertisementByActive();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    @Override
-    public List findAdvertisementByIdAuthor(int... ids) {
-        EntityManager em = FACTORY.createEntityManager();
-        EntityTransaction tran = em.getTransaction();
-
-        tran.begin();
-
-        List<Integer> names = new ArrayList<>();
-        List<Author> authors = new ArrayList<>();
-
-
-        for (Integer x : ids) {
-            names.add(x);
-            Author author = em.find(Author.class, x);
-            authors.add(author);
-        }
-
-        Query query = em.createQuery("FROM Advertisement c WHERE author IN :h_id");
-        query.setParameter("h_id", authors);
-        List<Advertisement> list = query.getResultList();
-
-
-        tran.commit();
-        em.close();
-
-        return list;
-    }*/

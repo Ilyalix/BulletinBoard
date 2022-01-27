@@ -3,6 +3,8 @@ package com.dao.impl;
 import com.dao.CrudDAO;
 import com.domain.Category;
 import com.domain.Category_;
+import com.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,56 +17,26 @@ import javax.persistence.metamodel.Metamodel;
 @Transactional
 public class CategoryDAOImpl implements CrudDAO<Category> {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    CategoryRepository repository;
 
     @Override
     public void save(Category category) {
-        em.persist(category);
+        repository.save(category);
     }
 
     @Override
     public void update(Category category) {
-        Category category1 = em.merge(category);
-        em.persist(category1);
-
+        repository.save(category);
     }
 
     @Override
     public Category findById(int id) {
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-
-        CriteriaQuery<Category> query = builder.createQuery(Category.class);
-
-        Root<Category> root = query.from(Category.class);
-
-        Path<Integer> pathId = root.get(Category_.id);
-
-        query.where(builder.equal(pathId, id));
-
-        query.select(root);
-
-        TypedQuery<Category> query1 = em.createQuery(query);
-        Category category = query1.getSingleResult();
-
-        return category;
+        return repository.findById(id).get();
     }
 
     @Override
     public void deleteById(int id) {
-
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-
-        CriteriaDelete<Category> criteriaDelete = builder.createCriteriaDelete(Category.class);
-
-        Root<Category> root = criteriaDelete.from(Category.class);
-
-        Path<Integer> pathId = root.get(Category_.id);
-
-        criteriaDelete.where(builder.equal(pathId, id));
-
-        Query query = em.createQuery(criteriaDelete);
-        query.executeUpdate();
+        repository.deleteById(id);
     }
 }
