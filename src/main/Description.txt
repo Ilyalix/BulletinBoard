@@ -161,4 +161,5 @@ AuthorDAOImpl
         List<Phone> collect1 = author.getPhones().stream().peek(k -> k.getPhone()).collect(Collectors.toList());
         System.out.println(collect1);
 
+        List<String> phones = authorName.getPhones().stream().map(p -> p.getPhone()).collect(Collectors.toList());
 

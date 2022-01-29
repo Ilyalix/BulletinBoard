@@ -2,38 +2,30 @@ package com.dao.impl;
 
 import com.dao.AdvertisementDAO;
 import com.domain.Advertisement;
-import com.domain.Advertisement_;
 import com.repository.AdvertisementRepository;
 import com.service.EmailService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
 @Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 public class AdvertisementDAOImpl implements AdvertisementDAO {
 
-    @Autowired
     AdvertisementRepository repository;
 
-    private EmailService emailService;
-
-    @Autowired
-    public AdvertisementDAOImpl(EmailService emailService) {
-        this.emailService = emailService;
-    }
-
+    EmailService emailService;
 
     @Override
     public void save(Advertisement advertisement) {
@@ -64,7 +56,7 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
 
     @Override
     public List<Advertisement> searchByWord(String text) {
-        return repository.findAdvertisementByText(text);
+        return repository.findAdvertisementByTextContaining(text);
     }
 
     @Override

@@ -17,11 +17,10 @@ public class EmailConfig implements EnvironmentAware {
 
     @Bean
     public JavaMailSender mailSender() {
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
 
         String login_email = env.getProperty("login_email");
         String password_email = env.getProperty("password_email");
-
-        JavaMailSenderImpl sender = new JavaMailSenderImpl();
 
         sender.setPort(587);
         sender.setHost("smtp.gmail.com");

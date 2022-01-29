@@ -1,6 +1,7 @@
 package com.service.impl;
 
 import com.domain.Advertisement;
+import com.domain.Author;
 import com.domain.Phone;
 import com.service.EmailService;
 import lombok.AccessLevel;
@@ -14,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -42,14 +46,23 @@ public class EmailsServiceImpl implements EmailService {
     public void sendEmails(Advertisement advertisement) {
         String[] emails = findAllSuitableEmails(advertisement);
 
-        if(emails.length>0){
+        Query queryPhones = em.createQuery("SELECT p.phone FROM Author a JOIN a.phones p WHERE a.id =:a_id");
+        queryPhones.setParameter("a_id", advertisement.getAuthor().getId());
+        List phones = queryPhones.getResultList();
+
+        Query queryName = em.createQuery("SELECT a.name FROM Author a WHERE a.id =:a_id");
+        queryName.setParameter("a_id", advertisement.getAuthor().getId());
+        List name = queryName.getResultList();
+
+        if (emails.length > 0) {
             SimpleMailMessage message = new SimpleMailMessage();
 
             message.setTo(emails);
             message.setSubject("Greetings");
             message.setText("Added new ad with text " + advertisement.getText() +
-                    "\n price " + advertisement.getPrice() +
-                    "\n Author " + advertisement.getAuthor().getName());
+                    "\n price: " + advertisement.getPrice() +
+                    "\n Author Name: " + name.get(0) +
+                    "\n Author Phone: " + phones);
 
             sender.send(message);
         }

@@ -1,9 +1,10 @@
 package config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import com.config.EmailConfig;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -24,8 +25,11 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@EnableScheduling
-public class ConfigAppTest implements WebMvcConfigurer {
+@Import(EmailConfig.class)
+@PropertySource("classpath:db.properties")
+@EnableJpaRepositories(basePackages = "com.repository")
+public class ConfigAppTest implements WebMvcConfigurer, EnvironmentAware {
+    private Environment env;
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory factory) {
@@ -41,9 +45,12 @@ public class ConfigAppTest implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource source = new DriverManagerDataSource();
 
+        String userName = env.getProperty("jdbc.username");
+        String password = env.getProperty("jdbc.password");
+
         source.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        source.setUsername("root");
-        source.setPassword("12345");
+        source.setUsername(userName);
+        source.setPassword(password);
         source.setUrl("jdbc:mysql://localhost:3306/bulletin_jpa-test?serverTimezone=Europe/Berlin");
 
         return source;
@@ -71,16 +78,9 @@ public class ConfigAppTest implements WebMvcConfigurer {
 
     }
 
-   /* @Bean
-    public AdvertisementDAOImpl advertisementDAO(){
-        return new AdvertisementDAOImpl();
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.env = environment;
+
     }
-
-    @Bean
-    public AdvertisementService advertisementService (AdvertisementDAOImpl advertisementDAO){
-        return new AdvertisementServiceImpl(advertisementDAO);
-    }*/
-
-
-
 }

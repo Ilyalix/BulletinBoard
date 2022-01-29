@@ -88,7 +88,7 @@ public class AdvertisementControllerTest {
 
     @Test
     public void shouldUpdateAdvertisement() throws Exception {
-        Mockito.doNothing().when(advertisementService).save(ArgumentMatchers.any(Advertisement.class));
+        Mockito.doNothing().when(advertisementService).update(ArgumentMatchers.any(Advertisement.class));
 
         Advertisement advertisement = AdvertisementUtil.createAdvertisement();
 
