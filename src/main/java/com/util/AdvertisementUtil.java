@@ -1,6 +1,7 @@
 package com.util;
 
 import com.domain.*;
+import com.dto.PageDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ public class AdvertisementUtil {
         Category category = Category.builder()
                 .name("House")
                 .build();
+
 
         Advertisement advertisement = Advertisement.builder()
                 .name("House")

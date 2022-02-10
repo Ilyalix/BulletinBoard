@@ -1,0 +1,2 @@
+CREATE TABLE author_role (PRIMARY KEY (Author_FK, Role_FK), Author_FK INT NOT NULL, Role_FK INT NOT NULL, FOREIGN KEY (Author_FK) REFERENCES Author(author_id),
+FOREIGN KEY (Role_FK) REFERENCES Role(role_id));

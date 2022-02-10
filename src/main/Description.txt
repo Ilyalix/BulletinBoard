@@ -1,62 +1,84 @@
 Author:
 POST:
-{   "id": 0,
+{
+  "id": 0,
+  "version": 0,
+  "name": "Kolya",
+  "age": 25,
+  "password": "123456",
+  "active": true,
+  "roles": [
+    {
+      "id": 1
+    }
+  ],
+  "phones": [
+    {
+      "id": 0,
+      "version": 0,
+      "phone": 111
+    },
+    {
+      "id": 0,
+      "version": 0,
+      "phone": 222
+    }
+  ],
+  "address": {
+    "id": 0,
     "version": 0,
-	"name": "Vasya",
-	"phones": [{
-	         "id": 0,
-             "version": 0,
-		     "phone": 111
-		},
-		{
-		     "id": 0,
-             "version": 0,
-		     "phone": 222
-		}
-	],
-	"address": {
-	         "id": 0,
-             "version": 0,
-	         "city": "NY"
-	},
-	"email": {
-             "id": 0,
-             "version": 0,
-	         "email": "rambler.ru"
-	}
+    "city": "NY"
+  },
+  "email": {
+    "id": 0,
+    "version": 0,
+    "email": "rambler.ru"
+  }
 }
+
 CascadeType.MERGE and PERSIST
+можно добавить автора в Phones:
+author.getPhones().forEach(t->t.setAuthor(author));
+
 
 PUT:
-    {
-   "id": 13,
-   "name": "Petya",
-   "version": 0,
-   "phones": [
-     {
-       "id":19,
-       "version": 0,
-       "phone": 6655,
-       "author":13
-     },
-     {
-       "id":20,
-       "version": 0,
-       "phone": 7788,
-       "author":13
-     }
-   ],
-   "address": {
-     "id":13,
-     "version": 0,
-     "city": "Moscow"
-   },
-   "email": {
-     "id":13,
-     "version": 0,
-     "email": "vk.ru"
-   }
-}
+  {
+    "id": 1,
+    "name": "Kolya",
+    "version": 0,
+    "password": "123",
+    "active": true,
+    "roles": [
+      {
+        "id": 1,
+        "name": "ROLE_ADMIN"
+      }
+    ],
+    "phones": [
+      {
+        "id":1,
+        "version": 0,
+        "phone": 900,
+        "author":1
+      },
+      {
+        "id":2,
+        "version": 0,
+        "phone": 800,
+        "author":1
+      }
+    ],
+    "address": {
+      "id":1,
+      "version": 0,
+      "city": "Moscow city"
+    },
+    "email": {
+      "id":1,
+      "version": 0,
+      "email": "vk2.ru"
+    }
+  }
 
 
 CATEGORY:
@@ -119,8 +141,8 @@ POST:
   "id": 0,
   "version": 0,
   "title": "Продам дом",
-   "priceTo": 2,
-   "priceFrom": 10,
+   "priceTo": 10,
+   "priceFrom": 2,
    "author": {
           "id": 5,
           "version": 0
@@ -148,6 +170,85 @@ PUT:
   }
 }
 
+Role:
+POST:
+{
+   "id": 0,
+   "name": "ROLE_USER"
+}
+
+Pagin:
+{
+  "page": 0,
+  "size": 2
+}
+
+
+
+
+
+
+форма лоогина через тайленд:
+http://localhost:9999/login?username=Jacky&password=123456
+при логине UserDetailsService находит по логину нужного юзер и создает временный объект юзера типа User,
+который берет из БД логин(name), пароль, активность и роли.
+
+JWT:
+registration:
+http://localhost:9999/bulletin/jwt/registration
+
+{
+  "id": 0,
+  "version": 0,
+  "name": "Benny",
+  "age": 25,
+  "password": "123456",
+  "active": true,
+  "roles": [
+    {
+      "id": 1
+    }
+  ],
+  "phones": [
+    {
+      "id": 0,
+      "version": 0,
+      "phone": 111
+    },
+    {
+      "id": 0,
+      "version": 0,
+      "phone": 222
+    }
+  ],
+  "address": {
+    "id": 0,
+    "version": 0,
+    "city": "NY"
+  },
+  "email": {
+    "id": 0,
+    "version": 0,
+    "email": "rambler.ru"
+  }
+}
+
+
+
+
+
+
+authentication:
+http://localhost:9999/bulletin/jwt/authenticate
+{
+  "username":"Benny",
+  "password":123456
+}
+
+
+
+
+
 
 
 
@@ -162,4 +263,5 @@ AuthorDAOImpl
         System.out.println(collect1);
 
         List<String> phones = authorName.getPhones().stream().map(p -> p.getPhone()).collect(Collectors.toList());
+
 

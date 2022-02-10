@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.domain.Advertisement;
+import com.dto.PageDTO;
 import com.service.CRUDService;
 
 import java.time.LocalDate;
@@ -17,5 +18,7 @@ public interface AdvertisementDAO extends CrudDAO<Advertisement> {
     List<Advertisement> searchByWord(String text);
 
     List<Advertisement> searchByDate(LocalDate dateOfPublic);
+
+    List<Advertisement> paging(int page, int size);
 
 }

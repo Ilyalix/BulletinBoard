@@ -1,11 +1,11 @@
 package com.controller;
 
 import com.domain.Advertisement;
+import com.dto.PageDTO;
 import com.service.AdvertisementService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,9 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AdvertisementController {
 
-    @Autowired
     AdvertisementService advertisementService;
-
 
     @PostMapping
     public void save(@Valid @RequestBody Advertisement advertisement){
@@ -67,4 +65,10 @@ public class AdvertisementController {
     public void deleteById(@PathVariable(value = "id") int id) {
         advertisementService.deleteById(id);
     }
+
+    @PostMapping(value = "paging")
+    public List<Advertisement> paging(@RequestBody PageDTO dto) {
+       return advertisementService.paging(dto.getPage(), dto.getSize());
+    }
+
 }

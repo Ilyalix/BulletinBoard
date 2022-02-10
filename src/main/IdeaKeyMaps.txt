@@ -7,3 +7,5 @@ ctrl + / - oneline comment
 ctrl + shift + enter - create body + move to it + format code
 .var  + TAB - create variable1
 ctrl + alt + v - create variable1
+ctrl + alt + o - delete
+alt -

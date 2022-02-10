@@ -21,6 +21,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ConfigAppTest.class)
 @WebAppConfiguration
@@ -99,5 +101,11 @@ public class AdvertisementServiceTest {
         advertisementService.deleteById(1);
         boolean exists = advertisementRepository.existsById(1);
         Assert.assertFalse(exists);
+    }
+
+    @Test
+    public void shouldGetPagination() {
+        List<Advertisement> paging = advertisementService.paging(0, 1);
+        Assert.assertEquals("House", paging.get(0).getName());
     }
 }

@@ -1,11 +1,9 @@
 package com.util;
 
-import com.domain.Address;
-import com.domain.Author;
-import com.domain.Email;
-import com.domain.Phone;
+import com.domain.*;
 
 import java.util.List;
+import java.util.Set;
 
 public class AuthorUtil {
 
@@ -28,12 +26,17 @@ public class AuthorUtil {
                 .city("orsk")
                 .build();
 
+        Role role = Role.builder()
+                .name(RoleName.ROLE_ADMIN)
+                .build();
 
         Author author = Author.builder()
                 .name("Masha")
                 .email(gmail)
                 .phones(List.of(number1, number2))
                 .address(orsk)
+                .active(true)
+                .roles(Set.of(role))
                 .build();
         number1.setAuthor(author);
         number2.setAuthor(author);

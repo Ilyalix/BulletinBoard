@@ -2,7 +2,6 @@ package com.dao.impl;
 
 import com.dao.CrudDAO;
 import com.domain.Category;
-import com.domain.Category_;
 import com.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

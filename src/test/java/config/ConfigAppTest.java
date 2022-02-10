@@ -1,6 +1,8 @@
 package config;
 
 import com.config.EmailConfig;
+import com.config.security.EncoderConfig;
+import com.config.security.SecurityConfig;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -11,7 +13,6 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -25,7 +26,7 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@Import(EmailConfig.class)
+@Import({EmailConfig.class, EncoderConfig.class, SecurityConfig.class})
 @PropertySource("classpath:db.properties")
 @EnableJpaRepositories(basePackages = "com.repository")
 public class ConfigAppTest implements WebMvcConfigurer, EnvironmentAware {

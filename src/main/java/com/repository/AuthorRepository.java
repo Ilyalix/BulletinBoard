@@ -12,4 +12,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
     @Query("FROM Advertisement c WHERE c.author.id IN :a_ids")
     List<Advertisement> findAdvertisementByIdAuthor(@Param("a_ids") List<Integer> ids);
+
+    Author findByName(String name);
 }

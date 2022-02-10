@@ -2,10 +2,12 @@ package controller;
 
 import com.controller.AdvertisementController;
 import com.domain.Advertisement;
+import com.dto.PageDTO;
 import com.exception_handler.HandlerExceptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.AdvertisementService;
 import com.util.AdvertisementUtil;
+import com.util.PageDtoUtil;
 import config.ConfigAppTest;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -118,6 +120,7 @@ public class AdvertisementControllerTest {
                 .andExpect(jsonPath("category.name").value("House"));
     }
 
+
     @Test
     public void shouldDeleteAdvertisement() throws Exception {
 
@@ -202,5 +205,27 @@ public class AdvertisementControllerTest {
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$[0].dateOfPublic[0]").value("2022"))
                 .andExpect(jsonPath("$[0].name").value("House"));
+    }
+
+
+    @Test
+    public void shouldGetPagination() throws Exception {
+        PageDTO pageDTO = PageDtoUtil.createPageDTO();
+
+        String json = OBJECT_MAPPER.writeValueAsString(pageDTO);
+
+        Advertisement advertisement = AdvertisementUtil.createAdvertisement();
+
+        List<Advertisement> list = Arrays.asList(advertisement);
+
+        Mockito.when(advertisementService.paging(pageDTO.getPage(), pageDTO.getSize())).thenReturn(list);
+
+        mockMvc.perform(post("/advertisement/paging")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andDo(print())
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$[0].name").value("House"));
+
     }
 }

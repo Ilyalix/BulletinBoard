@@ -6,9 +6,9 @@ import com.repository.AdvertisementRepository;
 import com.service.EmailService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,5 +77,14 @@ public class AdvertisementDAOImpl implements AdvertisementDAO {
     @Scheduled(cron = "0 0 1 * * *")
     public void delete() {
         repository.deleteAdvertisementByActive();
+    }
+
+    @Override
+    public List<Advertisement> paging(int page, int size) {
+        PageRequest request = PageRequest.of(page, size);
+
+        Page<Advertisement> page1 = repository.findAll(request);
+
+        return page1.getContent();
     }
 }

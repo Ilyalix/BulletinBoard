@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.domain.MatchingAd;
+import com.domain.Role;
 import com.service.CRUDService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,30 +10,31 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/matchingAd/")
+@RequestMapping(value = "/role/")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
-public class MatchingController {
+public class RoleController {
 
-    CRUDService<MatchingAd> matchingAdService;
+    CRUDService<Role> roleService;
 
     @PostMapping
-    public void save(@Valid @RequestBody MatchingAd matchingAd){
-        matchingAdService.save(matchingAd);
+    public void save(@Valid @RequestBody Role role){
+        roleService.save(role);
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody MatchingAd matchingAd){
-        matchingAdService.update(matchingAd);
+    public void update(@Valid @RequestBody Role role){
+        roleService.update(role);
     }
 
     @GetMapping(value = "{id}")
-    public MatchingAd findById(@PathVariable(value = "id") int id) {
-        return matchingAdService.findById(id);
+    public Role findById(@PathVariable(value = "id") int id) {
+        return roleService.findById(id);
     }
 
     @DeleteMapping(value = "{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
-        matchingAdService.deleteById(id);
+        roleService.deleteById(id);
     }
 }
+

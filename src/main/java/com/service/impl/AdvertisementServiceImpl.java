@@ -1,9 +1,8 @@
 package com.service.impl;
 
 import com.dao.AdvertisementDAO;
-import com.service.AdvertisementService;
-import com.dao.impl.AdvertisementDAOImpl;
 import com.domain.Advertisement;
+import com.service.AdvertisementService;
 import com.validation.Validation;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -70,6 +69,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public List<Advertisement> searchByDate(LocalDate dateOfPublic) {
         return DAO.searchByDate(dateOfPublic);
+    }
+
+    @Override
+    public List<Advertisement> paging(int page, int size) {
+        return DAO.paging(page, size);
     }
 }
 

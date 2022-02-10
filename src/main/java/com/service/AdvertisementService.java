@@ -1,7 +1,6 @@
 package com.service;
 
 import com.domain.Advertisement;
-import com.service.CRUDService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,4 +17,5 @@ public interface AdvertisementService extends CRUDService<Advertisement> {
 
     List<Advertisement> searchByDate(LocalDate dateOfPublic);
 
+    List<Advertisement> paging(int page, int size);
 }

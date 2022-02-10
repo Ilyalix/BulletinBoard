@@ -1,13 +1,13 @@
 package com;
 
 import com.config.ConfigApp;
-import com.dao.impl.MatchingDAOImpl;
 import com.domain.*;
-import com.service.*;
+import com.service.AdvertisementService;
+import com.service.AuthorService;
+import com.service.CRUDService;
 import com.service.impl.AdvertisementServiceImpl;
 import com.service.impl.AuthorServiceImpl;
 import com.service.impl.CategoryServiceImpl;
-import com.service.impl.MatchingServiceImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +79,7 @@ public class TestBulletin {
                 .build();
         number4.setAuthor(dasha);
         number5.setAuthor(dasha);
+
 
         Author vadim = Author.builder()
                 .name("Masha")
@@ -179,7 +180,7 @@ public class TestBulletin {
 
 
         AuthorService authorService = context.getBean(AuthorServiceImpl.class);
-      //  authorService.save(vadim);
+   //     authorService.save(vadim);
         Author author = authorService.findById(3);
 
       //  System.out.println(author);
