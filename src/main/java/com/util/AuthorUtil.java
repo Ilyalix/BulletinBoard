@@ -32,6 +32,8 @@ public class AuthorUtil {
 
         Author author = Author.builder()
                 .name("Masha")
+                .age(25)
+                .password("123456")
                 .email(gmail)
                 .phones(List.of(number1, number2))
                 .address(orsk)

@@ -8,15 +8,15 @@ import com.service.CRUDService;
 import com.service.impl.AdvertisementServiceImpl;
 import com.service.impl.AuthorServiceImpl;
 import com.service.impl.CategoryServiceImpl;
+import com.service.impl.RoleServiceImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 public class TestBulletin {
@@ -80,12 +80,18 @@ public class TestBulletin {
         number4.setAuthor(dasha);
         number5.setAuthor(dasha);
 
+        CRUDService<Role> categoryRole = context.getBean(RoleServiceImpl.class);
+        Role id = categoryRole.findById(1);
 
         Author vadim = Author.builder()
-                .name("Masha")
+                .name("Katya")
+                .age(25)
                 .email(rambler)
+                .password("123456")
                 .phones(List.of(number5))
                 .address(moscow)
+                .active(true)
+                .roles(Set.of(id))
                 .build();
         number5.setAuthor(vadim);
       //  number2.setAuthor(vadim);
@@ -169,8 +175,8 @@ public class TestBulletin {
                 .build();
  //       categoryService.save(categorynew);
 
-        Category category = categoryService.findById(7);
-        System.out.println(category);
+//        Category category = categoryService.findById(7);
+//        System.out.println(category);
 
         //     category.setName("Toys");
 
@@ -180,8 +186,8 @@ public class TestBulletin {
 
 
         AuthorService authorService = context.getBean(AuthorServiceImpl.class);
-   //     authorService.save(vadim);
-        Author author = authorService.findById(3);
+     //   authorService.save(vadim);
+       // Author author = authorService.findById(3);
 
       //  System.out.println(author);
 
@@ -199,14 +205,14 @@ public class TestBulletin {
         AdvertisementService advertisementService = context.getBean(AdvertisementServiceImpl.class);
 
 
-        Advertisement lot1 = Advertisement.builder()
+    /*    Advertisement lot1 = Advertisement.builder()
                 .name("House")
                 .dateOfPublic(LocalDate.of(2020, 3, 10))
                 .text("продам дом")
                 .price(BigDecimal.valueOf(1.5))
                 .build();
         lot1.setCategory(category);
-        lot1.setAuthor(author);
+        lot1.setAuthor(author);*/
 
  //       advertisementService.save(lot1);
 
@@ -270,7 +276,7 @@ public class TestBulletin {
 
         // сохранить новое объявление с сущ автором и категорией
         // em.persist(Lot5);
-//        bean.close();
+        bean.close();
 
     }
 }
