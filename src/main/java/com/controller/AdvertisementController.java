@@ -21,12 +21,12 @@ public class AdvertisementController {
     AdvertisementService advertisementService;
 
     @PostMapping
-    public void save(@Valid @RequestBody Advertisement advertisement){
+    public void save(@Valid @RequestBody Advertisement advertisement) {
         advertisementService.save(advertisement);
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody Advertisement advertisement){
+    public void update(@Valid @RequestBody Advertisement advertisement) {
         advertisementService.update(advertisement);
     }
 
@@ -68,7 +68,7 @@ public class AdvertisementController {
 
     @PostMapping(value = "paging")
     public List<Advertisement> paging(@RequestBody PageDTO dto) {
-       return advertisementService.paging(dto.getPage(), dto.getSize());
+        return advertisementService.paging(dto.getPage(), dto.getSize());
     }
 
 }

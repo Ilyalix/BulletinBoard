@@ -18,12 +18,12 @@ public class RoleController {
     CRUDService<Role> roleService;
 
     @PostMapping
-    public void save(@Valid @RequestBody Role role){
+    public void save(@Valid @RequestBody Role role) {
         roleService.save(role);
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody Role role){
+    public void update(@Valid @RequestBody Role role) {
         roleService.update(role);
     }
 

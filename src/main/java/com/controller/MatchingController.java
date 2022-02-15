@@ -18,12 +18,12 @@ public class MatchingController {
     CRUDService<MatchingAd> matchingAdService;
 
     @PostMapping
-    public void save(@Valid @RequestBody MatchingAd matchingAd){
+    public void save(@Valid @RequestBody MatchingAd matchingAd) {
         matchingAdService.save(matchingAd);
     }
 
     @PutMapping
-    public void update(@Valid @RequestBody MatchingAd matchingAd){
+    public void update(@Valid @RequestBody MatchingAd matchingAd) {
         matchingAdService.update(matchingAd);
     }
 

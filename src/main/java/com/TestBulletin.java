@@ -94,8 +94,7 @@ public class TestBulletin {
                 .roles(Set.of(id))
                 .build();
         number5.setAuthor(vadim);
-      //  number2.setAuthor(vadim);
-
+        //  number2.setAuthor(vadim);
 
 
         // найти автора по id
@@ -135,8 +134,6 @@ public class TestBulletin {
 //        entityManager.close();
 
 
-
-
 //        Category category = em.getReference(Category.class, 9);
 //        lot1.setCategory(category);
 //        Author Newauthor = em.getReference(Author.class, 64);
@@ -164,7 +161,7 @@ public class TestBulletin {
 
        /* Author authorNew = em.getReference(Author.class, 1);
         System.out.println(authorNew);*/
-    //   Category categoryNew = em.getReference(Category.class, 216);
+        //   Category categoryNew = em.getReference(Category.class, 216);
 
 
         CRUDService<Category> categoryService = context.getBean(CategoryServiceImpl.class);
@@ -173,7 +170,7 @@ public class TestBulletin {
         Category categorynew = Category.builder()
                 .name("House")
                 .build();
- //       categoryService.save(categorynew);
+        //       categoryService.save(categorynew);
 
 //        Category category = categoryService.findById(7);
 //        System.out.println(category);
@@ -186,10 +183,10 @@ public class TestBulletin {
 
 
         AuthorService authorService = context.getBean(AuthorServiceImpl.class);
-     //   authorService.save(vadim);
-       // Author author = authorService.findById(3);
+        //   authorService.save(vadim);
+        // Author author = authorService.findById(3);
 
-      //  System.out.println(author);
+        //  System.out.println(author);
 
         // authorNew.setName("Dasha");
         // author.update(authorNew);
@@ -214,11 +211,10 @@ public class TestBulletin {
         lot1.setCategory(category);
         lot1.setAuthor(author);*/
 
- //       advertisementService.save(lot1);
+        //       advertisementService.save(lot1);
 
 
-
-       //        Advertisement advertisementNew = advertisement.findById(64);
+        //        Advertisement advertisementNew = advertisement.findById(64);
         //System.out.println(advertisementNew);
    /*     advertisementNew.setAuthor(authorNew);
         advertisementNew.setCategory(categoryNew);
@@ -263,9 +259,9 @@ public class TestBulletin {
                 .build();*/
         //  MatchingAd matchingAd = new MatchingAd("продам вело", BigDecimal.valueOf(3), BigDecimal.valueOf(4), categoryNew, authorNew);
 
-     //  matchingService.save(matchingAdNew);
+        //  matchingService.save(matchingAdNew);
 
-     //   matchingService.findById(5);
+        //   matchingService.findById(5);
 
 
 //        em.persist(Lot2);

@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CategoryServiceImpl implements CRUDService<Category> {
 
-   CrudDAO<Category> DAO;
+    CrudDAO<Category> DAO;
 
-   @Autowired
+    @Autowired
     public CategoryServiceImpl(@Qualifier("categoryDAOImpl") CrudDAO<Category> dao) {
         this.DAO = dao;
     }

@@ -1,9 +1,12 @@
 package service;
 
 import com.domain.Author;
+import com.domain.Role;
 import com.repository.AuthorRepository;
+import com.repository.RoleRepository;
 import com.service.AuthorService;
 import com.util.AuthorUtil;
+import com.util.RoleUtil;
 import config.ConfigAppTest;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +18,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Set;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ConfigAppTest.class)
 @WebAppConfiguration
@@ -23,7 +28,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
         "classpath:sql_scripts/truncate_phone_table.sql",
         "classpath:sql_scripts/truncate_address_table.sql",
         "classpath:sql_scripts/truncate_author_table.sql",
-        "classpath:sql_scripts/truncate_advertisement_table.sql"
+        "classpath:sql_scripts/truncate_advertisement_table.sql",
+        "classpath:sql_scripts/truncate_role_table.sql",
+        "classpath:sql_scripts/truncate_author_role_table.sql"
 }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class AuthorServiceTest {
 
@@ -33,15 +40,30 @@ public class AuthorServiceTest {
     @Autowired
     AuthorRepository repository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
+
+    private void saveRole() {
+        Role role = RoleUtil.createRole();
+        roleRepository.save(role);
+    }
+
+    private void saveAuthor() {
+        Author author = AuthorUtil.createAuthor();
+        Role role = roleRepository.getById(1);
+        author.setRoles(Set.of(role));
+        repository.save(author);
+    }
 
     @Before
-    public void saveAuthor(){
-        Author author = AuthorUtil.createAuthor();
-        authorService.save(author);
+    public void saveBeforeAuthor() {
+        saveRole();
+        saveAuthor();
     }
 
     @Test
-    public void shouldSaveAuthor(){
+    public void shouldSaveAuthor() {
         Author author = repository.findById(1).get();
         String phone = author.getPhones().get(0).getPhone();
         String email = author.getEmail().getEmail();
@@ -54,7 +76,7 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void shouldUpdateAuthor(){
+    public void shouldUpdateAuthor() {
         Author author = repository.findById(1).get();
         author.setName("Pasha");
 
@@ -64,20 +86,19 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void shouldGetAuthor(){
+    public void shouldGetAuthor() {
         Author author = authorService.findById(1);
         Assert.assertEquals("Masha", author.getName());
     }
 
     @Test
-    public void shouldDeleteAuthor(){
+    public void shouldDeleteAuthor() {
         authorService.deleteById(1);
 
         boolean exists = repository.existsById(1);
 
         Assert.assertFalse(exists);
     }
-
 
 
 }

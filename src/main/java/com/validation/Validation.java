@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Validation {
 
-    public static<T> void validation(T t) {
+    public static <T> void validation(T t) {
         ValidatorFactory factory = javax.validation.Validation.buildDefaultValidatorFactory();
 
         Validator validator = factory.getValidator();

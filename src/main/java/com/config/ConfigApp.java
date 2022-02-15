@@ -1,5 +1,6 @@
 package com.config;
 
+import com.config.security.AuthenticationManagerConfig;
 import com.config.security.EncoderConfig;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.*;
@@ -27,7 +28,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableScheduling
-@Import({EmailConfig.class, EncoderConfig.class})
+@Import({EmailConfig.class, EncoderConfig.class, AuthenticationManagerConfig.class})
 @PropertySource("classpath:db.properties")
 @EnableJpaRepositories(basePackages = "com.repository")
 public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
@@ -44,7 +45,7 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
     }
 
     @Bean
-     public DataSource dataSource() {
+    public DataSource dataSource() {
         DriverManagerDataSource source = new DriverManagerDataSource();
 
         String userName = env.getProperty("jdbc.username");
@@ -94,7 +95,5 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
     public AdvertisementService advertisementService (AdvertisementDAOImpl advertisementDAO){
         return new AdvertisementServiceImpl(advertisementDAO);
     }*/
-
-
 
 }

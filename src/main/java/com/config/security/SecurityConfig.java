@@ -9,9 +9,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,10 +24,11 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
-@Import({EncoderConfig.class, ConfigApp.class})
+@Import({EncoderConfig.class, ConfigApp.class, AuthenticationManagerConfig.class})
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
+@Order(101)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     PasswordEncoder encoder;
@@ -81,9 +81,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder);
     }
 
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 }

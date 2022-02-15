@@ -25,7 +25,6 @@ public class MyUserDetailService implements UserDetailsService {
     @Autowired
     AuthorRepository repository;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Author authorName = repository.findByName(username);
@@ -47,8 +46,6 @@ public class MyUserDetailService implements UserDetailsService {
         return new User(authorName.getName(), authorName.getPassword(), authorName.isActive(), true,
                 true, true, authorities);
     }
-
-
 
 
 }

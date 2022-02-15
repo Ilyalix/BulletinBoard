@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AuthorDAO extends CrudDAO<Author> {
 
-   List<Advertisement> findAdvertisementByIdAuthor(List<Integer> ids);
+    List<Advertisement> findAdvertisementByIdAuthor(List<Integer> ids);
 
 
 }

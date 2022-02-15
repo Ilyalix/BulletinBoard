@@ -1,16 +1,16 @@
 package com.util;
 
 import com.domain.*;
-import com.dto.PageDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public class AdvertisementUtil {
 
 
-    public static Advertisement createAdvertisement(){
+    public static Advertisement createAdvertisement() {
         Email gmail = Email.builder()
                 .email("gmail.com")
                 .build();
@@ -26,11 +26,20 @@ public class AdvertisementUtil {
                 .city("orsk")
                 .build();
 
+
+        Role role = Role.builder()
+                .name(RoleName.ROLE_ADMIN)
+                .build();
+
         Author author = Author.builder()
                 .name("Masha")
+                .age(25)
+                .password("123456")
                 .email(gmail)
                 .phones(List.of(number1, number2))
                 .address(orsk)
+                .active(true)
+                .roles(Set.of(role))
                 .build();
         number1.setAuthor(author);
         number2.setAuthor(author);

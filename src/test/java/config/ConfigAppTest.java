@@ -1,6 +1,7 @@
 package config;
 
 import com.config.EmailConfig;
+import com.config.security.AuthenticationManagerConfig;
 import com.config.security.EncoderConfig;
 import com.config.security.SecurityConfig;
 import org.springframework.context.EnvironmentAware;
@@ -22,11 +23,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"com.service.impl", "com.dao.impl", "com.controller", "com.exception_handler"})
+@ComponentScan(basePackages = {"com.service.impl", "com.dao.impl", "com.controller",
+        "com.exception_handler", "com.jwt_processing"})
 @EnableWebMvc
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@Import({EmailConfig.class, EncoderConfig.class, SecurityConfig.class})
+@Import({EmailConfig.class, EncoderConfig.class, SecurityConfig.class, AuthenticationManagerConfig.class})
 @PropertySource("classpath:db.properties")
 @EnableJpaRepositories(basePackages = "com.repository")
 public class ConfigAppTest implements WebMvcConfigurer, EnvironmentAware {

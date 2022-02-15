@@ -22,17 +22,17 @@ public class AuthorController {
 
     @Secured({"ROLE_USER"})
     @PostMapping(value = "save")
-    public void save(@Valid @RequestBody Author author){
+    public void save(@Valid @RequestBody Author author) {
         authorService.save(author);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PutMapping
-    public void update(@Valid @RequestBody Author author){
+    public void update(@Valid @RequestBody Author author) {
         authorService.update(author);
     }
 
-    @Secured({"ROLE_USER"})
+    @Secured({"ROLE_ADMIN"})
     @GetMapping(value = "{id}")
     public Author findById(@PathVariable(value = "id") int id) {
         return authorService.findById(id);

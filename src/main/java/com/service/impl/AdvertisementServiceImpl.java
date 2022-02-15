@@ -49,9 +49,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> findAdvertisementByCategory(int id) {
         return DAO.findAdvertisementByCategory(id);
     }
-    
+
     @Override
-    public List<Advertisement> findAdvertisementByCategories(List<Integer> ids){
+    public List<Advertisement> findAdvertisementByCategories(List<Integer> ids) {
         return DAO.findAdvertisementByCategories(ids);
     }
 
@@ -78,7 +78,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 }
 
 /*
-* Mad("buy auto", cat - auto), save Ad("buy auto", cat - auto)
-* */
+ * Mad("buy auto", cat - auto), save Ad("buy auto", cat - auto)
+ * */
 
 

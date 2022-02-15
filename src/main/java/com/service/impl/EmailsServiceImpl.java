@@ -1,11 +1,8 @@
 package com.service.impl;
 
 import com.domain.Advertisement;
-import com.domain.Author;
-import com.domain.Phone;
 import com.service.EmailService;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,13 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.IntFunction;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Repository

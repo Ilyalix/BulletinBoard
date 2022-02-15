@@ -21,13 +21,13 @@ public class CategoryController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping
-    public void save(@Valid @RequestBody Category category){
+    public void save(@Valid @RequestBody Category category) {
         categoryService.save(category);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping
-    public void update(@Valid @RequestBody Category category){
+    public void update(@Valid @RequestBody Category category) {
         categoryService.update(category);
     }
 

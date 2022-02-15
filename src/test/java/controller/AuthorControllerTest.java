@@ -63,7 +63,7 @@ public class AuthorControllerTest {
 
         String json = OBJECT_MAPPER.writeValueAsString(author);
 
-        mockMvc.perform(post("/author/")
+        mockMvc.perform(post("/author/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andDo(print())
@@ -79,7 +79,7 @@ public class AuthorControllerTest {
 
         String json = OBJECT_MAPPER.writeValueAsString(author);
 
-        mockMvc.perform(post("/author/")
+        mockMvc.perform(post("/author/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andDo(print())

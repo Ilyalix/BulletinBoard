@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface AuthorService extends CRUDService<Author> {
 
-   List<Advertisement> findAdvertisementByIdAuthor(List<Integer> ids);
+    List<Advertisement> findAdvertisementByIdAuthor(List<Integer> ids);
 
 }
