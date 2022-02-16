@@ -1,4 +1,7 @@
 Author:
+http://localhost:9999/bulletin/author/save
++ Authorization + Bearer TOKEN
+
 POST:
 {
   "id": 0,
