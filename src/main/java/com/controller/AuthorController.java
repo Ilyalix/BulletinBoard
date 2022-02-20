@@ -20,7 +20,7 @@ public class AuthorController {
 
     AuthorService authorService;
 
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_USER"})
     @PostMapping(value = "save")
     public void save(@Valid @RequestBody Author author) {
         authorService.save(author);
