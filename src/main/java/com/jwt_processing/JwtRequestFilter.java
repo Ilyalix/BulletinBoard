@@ -25,7 +25,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     UserDetailsService service;
     JwtTokenUtil jwtTokenUtil;
 
-
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -61,7 +61,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                  UsernamePasswordAuthenticationToken
 
                  implementation that is designed for simple presentation of a username and password.
-
 
                 * */
 //                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
