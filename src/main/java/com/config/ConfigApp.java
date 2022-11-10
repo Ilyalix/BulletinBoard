@@ -85,15 +85,4 @@ public class ConfigApp implements WebMvcConfigurer, EnvironmentAware {
     public void setEnvironment(Environment environment) {
         this.env = environment;
     }
-
-   /* @Bean
-    public AdvertisementDAOImpl advertisementDAO(){
-        return new AdvertisementDAOImpl();
-    }
-
-    @Bean
-    public AdvertisementService advertisementService (AdvertisementDAOImpl advertisementDAO){
-        return new AdvertisementServiceImpl(advertisementDAO);
-    }*/
-
 }

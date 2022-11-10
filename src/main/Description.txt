@@ -1,6 +1,7 @@
 Author:
 http://localhost:9999/bulletin/author/save
 + Authorization + Bearer TOKEN
+сначала сохр. роли
 
 POST:
 {
